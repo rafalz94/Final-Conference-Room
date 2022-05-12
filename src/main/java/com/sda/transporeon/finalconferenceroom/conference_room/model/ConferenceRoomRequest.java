@@ -22,7 +22,7 @@ public class ConferenceRoomRequest {
     private String conferenceRoomName;
     @Min(value = 0, message = "Level number too small!", groups = {AddRoomGroup.class, UpdateRoomGroup.class})
     @Max(value = 10, message = "Level number too large!", groups = {AddRoomGroup.class, UpdateRoomGroup.class})
-    private Short level;
-    private Short sittingPlaces;
-    private Short standingPlaces;
+    private Integer level;
+    private Integer sittingPlaces;
+    private Integer standingPlaces;
 }

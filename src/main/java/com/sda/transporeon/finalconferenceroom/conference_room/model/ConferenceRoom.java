@@ -16,12 +16,12 @@ import java.util.List;
 public class ConferenceRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roomId;
+    private Integer roomId;
     private String roomName;
-    private int level;
+    private Integer level;
     private boolean availability;
-    private int sittingPlaces;
-    private int standingPlaces;
+    private Integer sittingPlaces;
+    private Integer standingPlaces;
     @ManyToOne
     private Organization organization;
     @OneToMany(mappedBy = "conferenceRoom", cascade = CascadeType.REMOVE)
