@@ -14,10 +14,10 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String identifier;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Integer reservationId;
+    private String reservationIdentifier;
+    private LocalDateTime ReservationStartDate;
+    private LocalDateTime ReservationEndDate;
     @ManyToOne
     private ConferenceRoom conferenceRoom;
 }
