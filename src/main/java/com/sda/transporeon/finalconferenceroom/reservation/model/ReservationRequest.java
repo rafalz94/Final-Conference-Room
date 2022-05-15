@@ -17,9 +17,9 @@ public class ReservationRequest {
 
     @NotBlank(message = "Reservation identifier cannot be blank!", groups = AddReservationGroup.class)
     @Size(min = 2, max = 20, message = "Reservation identifier has to be between 2 and 20 characters!", groups = {AddReservationGroup.class, UpdateReservationGroup.class})
-    private String identifier;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String reservationIdentifier;
+    private LocalDateTime reservationStartDate;
+    private LocalDateTime reservationEndDate;
 
     @NotBlank(message = "Conference room name cannot be blank!", groups = AddRoomGroup.class)
     @Size(min = 2, max = 20, message = "Conference room name has to be between 2 and 20 characters!", groups = {AddRoomGroup.class, UpdateRoomGroup.class})
@@ -28,6 +28,5 @@ public class ReservationRequest {
     @NotBlank(message = "Organization name cannot be blank!", groups = AddOrganizationGroup.class)
     @Size(min = 2, max = 20, message = "Organization name has to be between 2 and 20 characters!", groups = {AddOrganizationGroup.class, UpdateOrganizationGroup.class})
     private String organizationName;
-
 
 }

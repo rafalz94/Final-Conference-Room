@@ -13,15 +13,15 @@ public class OrganizationMapper {
 
     public Organization toEntity(OrganizationDto organizationDto) {
         Organization organization = new Organization();
-        organization.setName(organizationDto.getOrganizationName());
+        organization.setOrganizationName(organizationDto.getOrganizationName());
         return organization;
     }
 
     public OrganizationDto toDto(Organization organization) {
         OrganizationDto organizationDto = new OrganizationDto();
-        organizationDto.setId(organization.getOrganizationId());
-        organizationDto.setOrganizationName(organization.getName());
-        List<String> conferenceRooms = organization.getConferenceRooms().stream().map(ConferenceRoom::getRoomName).collect(Collectors.toList());
+        organizationDto.setOrganizationId(organization.getOrganizationId());
+        organizationDto.setOrganizationName(organization.getOrganizationName());
+        List<String> conferenceRooms = organization.getConferenceRooms().stream().map(ConferenceRoom::getConferenceRoomName).collect(Collectors.toList());
         organizationDto.setConferenceRoomDtoList(conferenceRooms);
         return organizationDto;
     }

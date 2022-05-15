@@ -38,7 +38,7 @@ public class OrganizationService {
     //TODO
     public OrganizationDto addOrganization(OrganizationDto organizationDto) {
         Organization organization = organizationMapper.toEntity(organizationDto);
-        organizationRepository.findByName(organizationDto.getOrganizationName()).ifPresent(org -> {
+        organizationRepository.findByOrganizationName(organizationDto.getOrganizationName()).ifPresent(org -> {
             throw new IllegalArgumentException();
         });
         return organizationMapper.toDto(organizationRepository.save(organization));
@@ -54,17 +54,17 @@ public class OrganizationService {
 
     //TODO
     public OrganizationDto updateOrganizationById(OrganizationDto organizationDto) {
-        Organization organization = organizationRepository.findById(organizationDto.getId()).orElseThrow(() -> {
+        Organization organization = organizationRepository.findById(organizationDto.getOrganizationId()).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
-        organizationRepository.findByName(organizationDto.getOrganizationName()).ifPresent(org -> {
+        organizationRepository.findByOrganizationName(organizationDto.getOrganizationName()).ifPresent(org -> {
             throw new IllegalArgumentException();
         });
         if (organizationDto.getOrganizationName() != null) {
-            organizationRepository.findByName(organizationDto.getOrganizationName()).ifPresent(org -> {
+            organizationRepository.findByOrganizationName(organizationDto.getOrganizationName()).ifPresent(org -> {
                 throw new IllegalArgumentException();
             });
-            organization.setName(organizationDto.getOrganizationName());
+            organization.setOrganizationName(organizationDto.getOrganizationName());
         }
         return organizationMapper.toDto(organizationRepository.save(organization));
     }

@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReservationDto {
 
-    private Integer id;
-    private String identifier;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Integer reservationId;
+    private String reservationIdentifier;
+    private LocalDateTime reservationStartDate;
+    private LocalDateTime ReservationEndDate;
     private String conferenceRoomName;
 }
