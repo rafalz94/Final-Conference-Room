@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("http://localhost:4200/")
 @RestController
 @RequestMapping("/organization")
@@ -20,7 +22,7 @@ public class OrganizationController {
     }
 
     @GetMapping()
-    public ResponseEntity<OrganizationDto> getAllOrganizations() {
+    public ResponseEntity<List<OrganizationDto>> getAllOrganizations() {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getAllOrganizations());
     }
 
@@ -40,11 +42,8 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-
-
-//    @PostMapping
-//    public ResponseEntity<OrganizationDto> addOrganization(@RequestBody @Valid final OrganizationRequest organizationRequest) {
-//        return ResponseEntity.status(HttpStatus.CREATED).body(new OrganizationDto());
-//    }
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<OrganizationDto> updateOrganization(@PathVariable("id") Integer id, @RequestBody OrganizationDto organizationDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganizationById(id, organizationDto));
+    }
 }

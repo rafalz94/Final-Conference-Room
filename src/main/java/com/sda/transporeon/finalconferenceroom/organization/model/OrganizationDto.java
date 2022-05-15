@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrganizationDto {
 
+    private Integer id;
     private String organizationName;
     private List<String> conferenceRoomDtoList = new ArrayList<>();
 }
