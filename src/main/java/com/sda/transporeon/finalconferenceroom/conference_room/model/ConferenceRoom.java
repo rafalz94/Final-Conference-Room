@@ -19,7 +19,7 @@ public class ConferenceRoom {
     private Integer roomId;
     private String roomName;
     private Integer level;
-    private boolean availability;
+    private Boolean availability;
     private Integer sittingPlaces;
     private Integer standingPlaces;
     @ManyToOne
