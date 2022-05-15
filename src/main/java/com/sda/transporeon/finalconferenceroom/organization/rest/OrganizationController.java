@@ -42,8 +42,8 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<OrganizationDto> updateOrganization(@PathVariable("id") Integer id, @RequestBody OrganizationDto organizationDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganizationById(id, organizationDto));
+    @PutMapping("/update")
+    public ResponseEntity<OrganizationDto> updateOrganization(@RequestBody OrganizationDto organizationDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganizationById(organizationDto));
     }
 }
