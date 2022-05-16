@@ -1,6 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.organization.rest;
 
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationDto;
+import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
 import com.sda.transporeon.finalconferenceroom.organization.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,24 +27,24 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getAllOrganizations());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrganizationDto> getOrganizationById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOrganizationById(id));
+    @GetMapping("/{organizationName}")
+    public ResponseEntity<OrganizationDto> getOrganizationByName(@PathVariable("organizationName") String organizationName) {
+        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOrganizationByName(organizationName));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<OrganizationDto> addOrganization(@RequestBody OrganizationDto organizationDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.addOrganization(organizationDto));
+    public ResponseEntity<OrganizationDto> addOrganization(@RequestBody OrganizationRequest organizationRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.addOrganization(organizationRequest));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteOrganization(@PathVariable("id") Integer id) {
-        organizationService.deleteOrganizationById(id);
+    @DeleteMapping("/delete/{organizationName}")
+    public ResponseEntity<Void> deleteOrganization(@PathVariable("organizationName") String organizationName) {
+        organizationService.deleteOrganization(organizationName);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<OrganizationDto> updateOrganization(@RequestBody OrganizationDto organizationDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganizationById(organizationDto));
+    @PutMapping("/update/{organizationName}")
+    public ResponseEntity<OrganizationDto> updateOrganization(@PathVariable String organizationName, @RequestBody OrganizationRequest organizationRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationName, organizationRequest));
     }
 }
