@@ -32,7 +32,12 @@ public class ConferenceRoomController {
         return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getConferenceRoomByName(conferenceRoomName));
     }
 
-    @PostMapping
+    @GetMapping("/organization/{organizationName}")
+    public ResponseEntity<List<ConferenceRoomResponse>> getAllByOrganizationName(@PathVariable("organizationName") String organizationName) {
+        return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getAllByOrganizationName(organizationName));
+    }
+
+    @PostMapping("/add")
     public ResponseEntity<ConferenceRoomResponse> addConferenceRoom(@RequestBody ConferenceRoomRequest conferenceRoomRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.addConferenceRoom(conferenceRoomRequest));
     }

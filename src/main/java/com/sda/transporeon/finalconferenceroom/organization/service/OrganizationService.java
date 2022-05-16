@@ -42,12 +42,11 @@ public class OrganizationService {
         Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
-        if (organizationRequest.getOrganizationName() != null) {
-            organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
-                throw new IllegalArgumentException();
-            });
-            organization.setOrganizationName(organizationRequest.getOrganizationName());
-        }
+        organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
+            throw new IllegalArgumentException();
+        });
+        organization.setOrganizationName(organizationRequest.getOrganizationName());
+
         return organizationMapper.toDto(organizationRepository.save(organization));
     }
 
