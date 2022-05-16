@@ -50,6 +50,6 @@ public class ConferenceRoomController {
 
     @PutMapping("/update/{conferenceRoomName}")
     public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@PathVariable("conferenceRoomName") String conferenceRoomName, @RequestBody ConferenceRoomRequest conferenceRoomRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoomById(conferenceRoomName, conferenceRoomRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoom(conferenceRoomName, conferenceRoomRequest));
     }
 }

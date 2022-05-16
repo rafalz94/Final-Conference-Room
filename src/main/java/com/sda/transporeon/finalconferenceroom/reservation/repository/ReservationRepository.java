@@ -4,6 +4,14 @@ import com.sda.transporeon.finalconferenceroom.reservation.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    Optional<Reservation> findByConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate);
+
+    Optional<Reservation> findByReservationIdentifierNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(String identifier, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate);
+
+    Optional<Reservation> findByReservationIdentifier(String reservationIdentifier);
 }

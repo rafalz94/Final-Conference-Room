@@ -26,7 +26,7 @@ class OrganizationServiceTest {
     private OrganizationService organizationService;
 
     @TestConfiguration
-    static class CurrencyServiceTestConfiguration {
+    static class OrganizationServiceConfiguration {
         @Bean
         OrganizationService OrganizationService(OrganizationRepository organizationRepository) {
             return new OrganizationService(organizationRepository, new OrganizationMapper());

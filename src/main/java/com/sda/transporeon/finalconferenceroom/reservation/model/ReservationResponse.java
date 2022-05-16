@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReservationResponse {
 
-    private Integer reservationId;
+    private Long reservationId;
     private String reservationIdentifier;
     private LocalDateTime reservationStartDate;
     private LocalDateTime ReservationEndDate;
