@@ -1,6 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.conference_room.rest;
 
-import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomDto;
+import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomRequest;
+import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomResponse;
 import com.sda.transporeon.finalconferenceroom.conference_room.service.ConferenceRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,28 +23,28 @@ public class ConferenceRoomController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ConferenceRoomDto>> getAllConferenceRooms() {
+    public ResponseEntity<List<ConferenceRoomResponse>> getAllConferenceRooms() {
         return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getAllConferenceRooms());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ConferenceRoomDto> getConferenceRoomById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getConferenceRoomById(id));
+    @GetMapping("/{conferenceRoomName}")
+    public ResponseEntity<ConferenceRoomResponse> getConferenceRoomById(@PathVariable("conferenceRoomName") String conferenceRoomName) {
+        return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getConferenceRoomByName(conferenceRoomName));
     }
 
     @PostMapping
-    public ResponseEntity<ConferenceRoomDto> addConferenceRoom(@RequestBody ConferenceRoomDto conferenceRoomDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.addConferenceRoom(conferenceRoomDto));
+    public ResponseEntity<ConferenceRoomResponse> addConferenceRoom(@RequestBody ConferenceRoomRequest conferenceRoomRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.addConferenceRoom(conferenceRoomRequest));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteConferenceRoom(@PathVariable("id") Integer id) {
-        conferenceRoomService.deleteConferenceRoomById(id);
+    @DeleteMapping("/delete/{conferenceRoomName}")
+    public ResponseEntity<Void> deleteConferenceRoom(@PathVariable("conferenceRoomName") String conferenceRoomName) {
+        conferenceRoomService.deleteConferenceRoom(conferenceRoomName);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ConferenceRoomDto> updateConferenceRoom(@PathVariable("id") Integer id, @RequestBody ConferenceRoomDto conferenceRoomDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoomById(id, conferenceRoomDto));
+    @PutMapping("/update/{conferenceRoomName}")
+    public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@PathVariable("conferenceRoomName") String conferenceRoomName, @RequestBody ConferenceRoomRequest conferenceRoomRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoomById(conferenceRoomName, conferenceRoomRequest));
     }
 }

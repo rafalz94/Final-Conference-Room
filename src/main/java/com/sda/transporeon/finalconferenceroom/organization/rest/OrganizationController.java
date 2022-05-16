@@ -1,6 +1,6 @@
 package com.sda.transporeon.finalconferenceroom.organization.rest;
 
-import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationDto;
+import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationResponse;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
 import com.sda.transporeon.finalconferenceroom.organization.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +23,17 @@ public class OrganizationController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<OrganizationDto>> getAllOrganizations() {
+    public ResponseEntity<List<OrganizationResponse>> getAllOrganizations() {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getAllOrganizations());
     }
 
     @GetMapping("/{organizationName}")
-    public ResponseEntity<OrganizationDto> getOrganizationByName(@PathVariable("organizationName") String organizationName) {
+    public ResponseEntity<OrganizationResponse> getOrganizationByName(@PathVariable("organizationName") String organizationName) {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOrganizationByName(organizationName));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<OrganizationDto> addOrganization(@RequestBody OrganizationRequest organizationRequest) {
+    public ResponseEntity<OrganizationResponse> addOrganization(@RequestBody OrganizationRequest organizationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.addOrganization(organizationRequest));
     }
 
@@ -44,7 +44,7 @@ public class OrganizationController {
     }
 
     @PutMapping("/update/{organizationName}")
-    public ResponseEntity<OrganizationDto> updateOrganization(@PathVariable String organizationName, @RequestBody OrganizationRequest organizationRequest) {
+    public ResponseEntity<OrganizationResponse> updateOrganization(@PathVariable String organizationName, @RequestBody OrganizationRequest organizationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationName, organizationRequest));
     }
 }
