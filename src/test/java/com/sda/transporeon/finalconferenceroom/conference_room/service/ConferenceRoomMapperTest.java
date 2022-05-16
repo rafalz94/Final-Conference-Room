@@ -28,7 +28,7 @@ class ConferenceRoomMapperTest {
         organization.setOrganizationName("organization1");
         conferenceRoom.setOrganization(organization);
         //when
-        ConferenceRoomResponse conferenceRoomResponse = conferenceRoomMapper.fromEntityToResponse(conferenceRoom);
+        ConferenceRoomResponse conferenceRoomResponse = conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
         //then
         assertAll(
                 () -> assertEquals(conferenceRoom.getConferenceRoomName(), conferenceRoomResponse.getConferenceRoomName()),
@@ -51,7 +51,7 @@ class ConferenceRoomMapperTest {
         conferenceRoomRequest.setSittingPlaces(10);
         conferenceRoomRequest.setOrganizationName("organization1");
         //when
-        ConferenceRoom conferenceRoom=conferenceRoomMapper.fromRequestToEntity(conferenceRoomRequest);
+        ConferenceRoom conferenceRoom=conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         //then
         assertAll(
                 () -> assertEquals(conferenceRoomRequest.getConferenceRoomName(),conferenceRoom.getConferenceRoomName()),

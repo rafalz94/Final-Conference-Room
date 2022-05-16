@@ -5,6 +5,8 @@ import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRe
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrganizationMapperTest {
@@ -19,6 +21,7 @@ class OrganizationMapperTest {
         organization.setOrganizationName("organization1");
         //when
         OrganizationResponse returnedOrganization = organizationMapper.fromEntityToResponse(organization);
+        System.out.println(LocalDateTime.now());
         //then
         assertAll(
                 () -> assertEquals(organization.getOrganizationId(), returnedOrganization.getOrganizationId()),

@@ -1,5 +1,6 @@
 package com.sda.transporeon.finalconferenceroom.reservation.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.AddRoomGroup;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.UpdateRoomGroup;
 import com.sda.transporeon.finalconferenceroom.organization.model.AddOrganizationGroup;
@@ -18,7 +19,9 @@ public class ReservationRequest {
     @NotBlank(message = "Reservation identifier cannot be blank!", groups = AddReservationGroup.class)
     @Size(min = 2, max = 20, message = "Reservation identifier has to be between 2 and 20 characters!", groups = {AddReservationGroup.class, UpdateReservationGroup.class})
     private String reservationIdentifier;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime reservationStartDate;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime reservationEndDate;
 
     @NotBlank(message = "Conference room name cannot be blank!", groups = AddRoomGroup.class)
