@@ -25,11 +25,11 @@ public class OrganizationService {
     }
 
     public OrganizationResponse addOrganization(OrganizationRequest organizationRequest) {
-        Organization organization = organizationMapper.toEntity(organizationRequest);
+        Organization organization = organizationMapper.fromRequestToEntity(organizationRequest);
         organizationRepository.findByOrganizationName(organization.getOrganizationName()).ifPresent(org -> {
             throw new OrganizationAlreadyExistsException(organization.getOrganizationName());
         });
-        return organizationMapper.toDto(organizationRepository.save(organization));
+        return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
 
     public void deleteOrganization(String organizationName) {
@@ -48,17 +48,17 @@ public class OrganizationService {
         });
         organization.setOrganizationName(organizationRequest.getOrganizationName());
 
-        return organizationMapper.toDto(organizationRepository.save(organization));
+        return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
 
     public OrganizationResponse getOrganizationByName(String organizationName) {
         Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
             throw new OrganizationNotFoundException(organizationName);
         });
-        return organizationMapper.toDto(organization);
+        return organizationMapper.fromEntityToResponse(organization);
     }
 
     public List<OrganizationResponse> getAllOrganizations() {
-        return organizationRepository.findAll().stream().map(organizationMapper::toDto).collect(Collectors.toList());
+        return organizationRepository.findAll().stream().map(organizationMapper::fromEntityToResponse).collect(Collectors.toList());
     }
 }

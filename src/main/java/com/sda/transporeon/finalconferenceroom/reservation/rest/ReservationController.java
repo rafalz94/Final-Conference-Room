@@ -1,5 +1,6 @@
 package com.sda.transporeon.finalconferenceroom.reservation.rest;
 
+import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationRequest;
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
 import com.sda.transporeon.finalconferenceroom.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,24 +27,24 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.OK).body(reservationService.getAllReservations());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ReservationResponse> getReservationById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(reservationService.getReservationById(id));
+    @GetMapping("/{reservationIdentifier}")
+    public ResponseEntity<ReservationResponse> getReservationById(@PathVariable("reservationIdentifier") String reservationIdentifier) {
+        return ResponseEntity.status(HttpStatus.OK).body(reservationService.getReservationByIdentifier(reservationIdentifier));
     }
 
-    @PostMapping()
-    public ResponseEntity<ReservationResponse> addReservation(@RequestBody ReservationResponse reservationResponse) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationResponse));
+    @PostMapping("/add")
+    public ResponseEntity<ReservationResponse> addReservation(@RequestBody ReservationRequest reservationRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationRequest));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable("id") Integer id) {
-        reservationService.deleteReservationById(id);
+    @DeleteMapping("/delete/{reservationIdentifier}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable("reservationIdentifier") String reservationIdentifier) {
+        reservationService.deleteReservationByIdentifier(reservationIdentifier);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ReservationResponse> updateReservation(@PathVariable("id") Integer id, @RequestBody ReservationResponse reservationResponse) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservationById(id, reservationResponse));
+    @PutMapping("/update/{reservationIdentifier}")
+    public ResponseEntity<ReservationResponse> updateReservation(@PathVariable("reservationIdentifier") String reservationIdentifier, @RequestBody ReservationRequest reservationRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservation(reservationIdentifier, reservationRequest));
     }
 }

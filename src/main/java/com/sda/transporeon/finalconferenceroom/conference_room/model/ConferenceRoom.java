@@ -18,7 +18,7 @@ import java.util.List;
 public class ConferenceRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer conferenceRoomId;
+    private Long conferenceRoomId;
     private String conferenceRoomName;
     private Integer level;
     private Availability availability;

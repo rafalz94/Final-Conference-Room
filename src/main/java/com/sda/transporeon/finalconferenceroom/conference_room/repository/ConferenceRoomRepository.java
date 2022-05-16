@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ConferenceRoomRepository extends JpaRepository<ConferenceRoom, Integer> {
+public interface ConferenceRoomRepository extends JpaRepository<ConferenceRoom, Long> {
     Optional<ConferenceRoom> findByConferenceRoomName(String name);
 
     List<ConferenceRoom> findByOrganization_OrganizationName(String organizationName);

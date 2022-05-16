@@ -6,10 +6,13 @@ import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationRequ
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class ReservationMapper {
 
-    public static Reservation mapFromRequestToEntity(final ReservationRequest request){
+    public Reservation mapFromRequestToEntity(final ReservationRequest request) {
         final Reservation reservation = new Reservation();
         reservation.setReservationIdentifier(request.getReservationIdentifier());
         reservation.setReservationStartDate(request.getReservationStartDate());
@@ -21,7 +24,7 @@ public class ReservationMapper {
         return reservation;
     }
 
-    public static ReservationResponse mapFromEntityToResponse(final Reservation reservation){
+    public ReservationResponse mapFromEntityToResponse(final Reservation reservation) {
         final ReservationResponse response = new ReservationResponse();
         response.setReservationIdentifier(reservation.getReservationIdentifier());
         response.setReservationStartDate(reservation.getReservationStartDate());

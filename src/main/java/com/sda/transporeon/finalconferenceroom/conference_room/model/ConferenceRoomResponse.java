@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ConferenceRoomResponse {
 
-    private Integer conferenceRoomId;
+    private Long conferenceRoomId;
     private String conferenceRoomName;
     private Integer level;
     private Availability availability;

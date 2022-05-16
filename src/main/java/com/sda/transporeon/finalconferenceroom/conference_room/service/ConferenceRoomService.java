@@ -66,7 +66,7 @@ public class ConferenceRoomService {
         conferenceRoomRepository.delete(conferenceRoom);
     }
 
-    public ConferenceRoomResponse updateConferenceRoomById(String conferenceRoomName, ConferenceRoomRequest conferenceRoomRequest) {
+    public ConferenceRoomResponse updateConferenceRoom(String conferenceRoomName, ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException(conferenceRoomRequest.getConferenceRoomName());
         });
