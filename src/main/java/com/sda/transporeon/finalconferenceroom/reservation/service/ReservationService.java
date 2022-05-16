@@ -32,34 +32,10 @@ public class ReservationService {
         return reservationRepository.findAll().stream().map(reservationMapper::mapFromEntityToResponse).collect(Collectors.toList());
     }
 
-    //    public ReservationResponse getReservationByIdentifier(String reservationIdentifier) {
-//        Reservation reservation = reservationRepository.findByReservationIdentifier(reservationIdentifier).orElseThrow(() -> {
-//            throw new NoSuchElementException();
-//        });
-//        return reservationMapper.mapFromEntityToResponse(reservation);
-//    }
-
     public ReservationResponse getReservationByIdentifier(String reservationIdentifier) {
         Reservation reservation = getIfFound(reservationIdentifier);
         return reservationMapper.mapFromEntityToResponse(reservation);
     }
-
-//     public ReservationResponse addReservation(ReservationRequest reservationRequest) {
-//        Reservation reservation = reservationMapper.mapFromRequestToEntity(reservationRequest);
-//        reservationRepository.findByConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual
-//                (reservationRequest.getConferenceRoomName(),
-//                        reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate()).ifPresent(res -> {
-//            throw new IllegalArgumentException();
-//        });
-//        reservationRepository.findByReservationIdentifier(reservationRequest.getReservationIdentifier()).ifPresent(res -> {
-//            throw new IllegalArgumentException();
-//        });
-//        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName()).orElseThrow(() -> {
-//            throw new NoSuchElementException();
-//        });
-//        reservation.setConferenceRoom(conferenceRoom);
-//        return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
-//    }
 
     public ReservationResponse addReservation(ReservationRequest reservationRequest) {
         Reservation reservation = reservationMapper.mapFromRequestToEntity(reservationRequest);
@@ -73,79 +49,53 @@ public class ReservationService {
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
-    //    public void deleteReservationByIdentifier(String reservationIdentifier) {
-//        Reservation reservation = reservationRepository.findByReservationIdentifier(reservationIdentifier).orElseThrow(() -> {
-//            throw new NoSuchElementException();
-//        });
-//        reservationRepository.delete(reservation);
-//    }
-
     public void deleteReservationByIdentifier(String reservationIdentifier) {
         Reservation reservation = getIfFound(reservationIdentifier);
         reservationRepository.delete(reservation);
     }
 
-//    public ReservationResponse updateReservation(String reservationIdentifier, ReservationRequest reservationRequest) {
-//        Reservation reservation = reservationRepository.findByReservationIdentifier(reservationIdentifier).orElseThrow(() -> {
-//            throw new NoSuchElementException();
-//        });
-//        reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
-//        reservationRepository.findByReservationIdentifier(reservationRequest.getReservationIdentifier()).ifPresent(res -> {
-//            throw new IllegalArgumentException();
-//        });
-//        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
-//            throw new NoSuchElementException();
-//        });
-//        reservation.setConferenceRoom(conferenceRoom);
-//        reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
-//        reservation.setReservationEndDate(reservationRequest.getReservationEndDate());
-//        reservationRepository.findByReservationIdNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
-//                reservation.getReservationId(), reservationRequest.getConferenceRoomName(), reservationRequest.getReservationEndDate(),
-//                reservationRequest.getReservationStartDate()).ifPresent(res -> {
-//            throw new IllegalArgumentException();
-//        });
-//        return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
-//    }
-
     public ReservationResponse updateReservation(String reservationIdentifier, ReservationRequest reservationRequest) {
         Reservation reservation = getIfFound(reservationIdentifier);
         reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
-        checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
+        checkIfUniqueIdentifierForUpdate(reservationRequest.getReservationIdentifier(), reservationIdentifier);
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
         reservation.setReservationEndDate(reservationRequest.getReservationEndDate());
-        checkIfUniqueReservationForUpdate(reservation.getReservationId(), reservationRequest.getConferenceRoomName(), reservationRequest.getReservationEndDate(),
+        checkIfUniqueReservationForUpdate(reservationIdentifier, reservationRequest.getConferenceRoomName(), reservationRequest.getReservationEndDate(),
                 reservationRequest.getReservationStartDate());
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
-    //1
     public void checkIfUniqueIdentifier(String reservationIdentifier) {
         reservationRepository.findByReservationIdentifier(reservationIdentifier).ifPresent(reservation -> {
             throw new IllegalArgumentException();
         });
     }
 
-    //2
+    public void checkIfUniqueIdentifierForUpdate(String reservationIdentifier1, String reservationIdentifier2) {
+        reservationRepository.findByReservationIdentifierAndReservationIdentifierNot(reservationIdentifier1, reservationIdentifier2).ifPresent(reservation -> {
+            throw new IllegalArgumentException();
+        });
+    }
+
+
     public Reservation getIfFound(String reservationIdentifier) {
         return reservationRepository.findByReservationIdentifier(reservationIdentifier).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
     }
 
-    //3
-    public void checkIfUniqueReservationForUpdate(Long reservationId, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
-        reservationRepository.findByReservationIdNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
-                reservationId, conferenceRoomName, endDate,
+    public void checkIfUniqueReservationForUpdate(String reservationIdentifier, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
+        reservationRepository.findByReservationIdentifierNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
+                reservationIdentifier, conferenceRoomName, endDate,
                 startDate).ifPresent(res -> {
             throw new IllegalArgumentException();
         });
     }
 
-    //4
     public void checkIfUniqueReservation(String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
         reservationRepository.findByConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
                 conferenceRoomName, endDate,
