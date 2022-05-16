@@ -1,6 +1,6 @@
 package com.sda.transporeon.finalconferenceroom.reservation.service;
 
-import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationDto;
+import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,17 +9,17 @@ import java.util.List;
 public class ReservationService {
 
     //TODO
-    public List<ReservationDto> getAllReservations() {
-        return List.of(new ReservationDto(), new ReservationDto());
+    public List<ReservationResponse> getAllReservations() {
+        return List.of(new ReservationResponse(), new ReservationResponse());
     }
 
     //TODO
-    public ReservationDto getReservationById(Integer id) {
+    public ReservationResponse getReservationById(Integer id) {
         return null;
     }
 
     //TODO
-    public ReservationDto addReservation(ReservationDto reservationDto) {
+    public ReservationResponse addReservation(ReservationResponse reservationResponse) {
         return null;
     }
 
@@ -28,7 +28,7 @@ public class ReservationService {
     }
 
     //TODO
-    public ReservationDto updateReservationById(Integer id, ReservationDto reservationDto) {
+    public ReservationResponse updateReservationById(Integer id, ReservationResponse reservationResponse) {
         return null;
     }
 }

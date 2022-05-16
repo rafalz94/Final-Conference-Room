@@ -30,12 +30,12 @@ public class ConferenceRoomService {
     }
 
     public List<ConferenceRoomResponse> getAllConferenceRooms() {
-        return conferenceRoomRepository.findAll().stream().map(conferenceRoomMapper::fromEntityToResponse).collect(Collectors.toList());
+        return conferenceRoomRepository.findAll().stream().map(conferenceRoomMapper::mapFromEntityToResponse).collect(Collectors.toList());
     }
 
     public List<ConferenceRoomResponse> getAllByOrganizationName(String organizationName) {
         return conferenceRoomRepository.findByOrganization_OrganizationName(organizationName).stream()
-                .map(conferenceRoomMapper::fromEntityToResponse).collect(Collectors.toList());
+                .map(conferenceRoomMapper::mapFromEntityToResponse).collect(Collectors.toList());
     }
 
     public ConferenceRoomResponse getConferenceRoomByName(String conferenceRoomName) {
@@ -43,11 +43,11 @@ public class ConferenceRoomService {
             throw new ConferenceRoomNotFoundException(conferenceRoomName);
         });
 
-        return conferenceRoomMapper.fromEntityToResponse(conferenceRoom);
+        return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
     }
 
     public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
-        ConferenceRoom conferenceRoom = conferenceRoomMapper.fromRequestToEntity(conferenceRoomRequest);
+        ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoom.getConferenceRoomName()).ifPresent(room -> {
             throw new ConferenceRoomAlreadyExistsException(conferenceRoomRequest.getConferenceRoomName());
         });
@@ -56,7 +56,7 @@ public class ConferenceRoomService {
         });
         conferenceRoom.setOrganization(organization);
 
-        return conferenceRoomMapper.fromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
+        return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
     }
 
     public void deleteConferenceRoom(String conferenceRoomName) {
@@ -78,6 +78,6 @@ public class ConferenceRoomService {
         conferenceRoom.setStandingPlaces(conferenceRoomRequest.getStandingPlaces());
         conferenceRoom.setSittingPlaces(conferenceRoomRequest.getSittingPlaces());
 
-        return conferenceRoomMapper.fromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
+        return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
     }
 }
