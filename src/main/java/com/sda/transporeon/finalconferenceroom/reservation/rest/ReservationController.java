@@ -1,6 +1,6 @@
 package com.sda.transporeon.finalconferenceroom.reservation.rest;
 
-import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationDto;
+import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
 import com.sda.transporeon.finalconferenceroom.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,18 +22,18 @@ public class ReservationController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ReservationDto>> getAllReservations() {
+    public ResponseEntity<List<ReservationResponse>> getAllReservations() {
         return ResponseEntity.status(HttpStatus.OK).body(reservationService.getAllReservations());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationDto> getReservationById(@PathVariable("id") Integer id) {
+    public ResponseEntity<ReservationResponse> getReservationById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(reservationService.getReservationById(id));
     }
 
     @PostMapping()
-    public ResponseEntity<ReservationDto> addReservation(@RequestBody ReservationDto reservationDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationDto));
+    public ResponseEntity<ReservationResponse> addReservation(@RequestBody ReservationResponse reservationResponse) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationResponse));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -43,7 +43,7 @@ public class ReservationController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ReservationDto> updateReservation(@PathVariable("id") Integer id, @RequestBody ReservationDto reservationDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservationById(id, reservationDto));
+    public ResponseEntity<ReservationResponse> updateReservation(@PathVariable("id") Integer id, @RequestBody ReservationResponse reservationResponse) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservationById(id, reservationResponse));
     }
 }

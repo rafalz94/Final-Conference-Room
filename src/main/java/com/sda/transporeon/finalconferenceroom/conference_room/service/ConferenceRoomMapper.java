@@ -9,20 +9,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConferenceRoomMapper {
 
-    public ConferenceRoom fromRequestToEntity(final ConferenceRoomRequest request) {
+    public ConferenceRoom mapFromRequestToEntity(final ConferenceRoomRequest request) {
         final ConferenceRoom conferenceRoom = new ConferenceRoom();
         conferenceRoom.setConferenceRoomName(request.getConferenceRoomName());
         conferenceRoom.setLevel(request.getLevel());
         conferenceRoom.setSittingPlaces(request.getSittingPlaces());
         conferenceRoom.setStandingPlaces(request.getStandingPlaces());
-        Organization organization = new Organization();
+
+        final Organization organization = new Organization();
         organization.setOrganizationName(request.getOrganizationName());
         conferenceRoom.setOrganization(organization);
 
         return conferenceRoom;
     }
 
-    public ConferenceRoomResponse fromEntityToResponse(final ConferenceRoom conferenceRoom) {
+    public ConferenceRoomResponse mapFromEntityToResponse(final ConferenceRoom conferenceRoom) {
         final ConferenceRoomResponse response = new ConferenceRoomResponse();
         response.setConferenceRoomId(conferenceRoom.getConferenceRoomId());
         response.setConferenceRoomName(conferenceRoom.getConferenceRoomName());
@@ -30,7 +31,6 @@ public class ConferenceRoomMapper {
         response.setAvailability(conferenceRoom.getAvailability());
         response.setSittingPlaces(conferenceRoom.getSittingPlaces());
         response.setStandingPlaces(conferenceRoom.getStandingPlaces());
-        response.setAvailability(conferenceRoom.getAvailability());
         response.setOrganizationName(conferenceRoom.getOrganization().getOrganizationName());
 
         return response;
