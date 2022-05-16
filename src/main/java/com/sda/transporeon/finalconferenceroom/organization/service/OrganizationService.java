@@ -1,5 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.organization.service;
 
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.organization.model.Organization;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationResponse;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
@@ -26,24 +28,24 @@ public class OrganizationService {
     public OrganizationResponse addOrganization(OrganizationRequest organizationRequest) {
         Organization organization = organizationMapper.toEntity(organizationRequest);
         organizationRepository.findByOrganizationName(organization.getOrganizationName()).ifPresent(org -> {
-            throw new IllegalArgumentException();
+            throw new OrganizationAlreadyExistsException(organization.getOrganizationName());
         });
         return organizationMapper.toDto(organizationRepository.save(organization));
     }
 
     public void deleteOrganization(String organizationName) {
         Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException(organizationName);
         });
         organizationRepository.delete(organization);
     }
 
     public OrganizationResponse updateOrganization(String organizationName, OrganizationRequest organizationRequest) {
         Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException(organizationName);
         });
         organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
-            throw new IllegalArgumentException();
+            throw new OrganizationAlreadyExistsException(organizationRequest.getOrganizationName());
         });
         organization.setOrganizationName(organizationRequest.getOrganizationName());
 
@@ -52,7 +54,7 @@ public class OrganizationService {
 
     public OrganizationResponse getOrganizationByName(String organizationName) {
         Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException(organizationName);
         });
         return organizationMapper.toDto(organization);
     }
