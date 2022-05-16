@@ -1,7 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.organization.service;
 
 import com.sda.transporeon.finalconferenceroom.organization.model.Organization;
-import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationDto;
+import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationResponse;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class OrganizationMapperTest {
         organization.setOrganizationId(1L);
         organization.setOrganizationName("organization1");
         //when
-        OrganizationDto returnedOrganization = organizationMapper.toDto(organization);
+        OrganizationResponse returnedOrganization = organizationMapper.toDto(organization);
         //then
         assertAll(
                 () -> assertEquals(organization.getOrganizationId(), returnedOrganization.getOrganizationId()),

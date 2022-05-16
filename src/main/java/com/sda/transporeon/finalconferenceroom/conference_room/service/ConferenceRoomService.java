@@ -1,6 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.conference_room.service;
 
-import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomDto;
+import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomRequest;
+import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,26 +10,26 @@ import java.util.List;
 public class ConferenceRoomService {
 
     //TODO
-    public List<ConferenceRoomDto> getAllConferenceRooms() {
-        return List.of(new ConferenceRoomDto(), new ConferenceRoomDto());
+    public List<ConferenceRoomResponse> getAllConferenceRooms() {
+        return List.of();
     }
 
     //TODO
-    public ConferenceRoomDto getConferenceRoomById(Integer id) {
+    public ConferenceRoomResponse getConferenceRoomByName(String conferenceRoomName) {
         return null;
     }
 
     //TODO
-    public ConferenceRoomDto addConferenceRoom(ConferenceRoomDto conferenceRoomDto) {
+    public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         return null;
     }
 
     //TODO
-    public void deleteConferenceRoomById(Integer id) {
+    public void deleteConferenceRoom(String conferenceRoomName) {
     }
 
     //TODO
-    public ConferenceRoomDto updateConferenceRoomById(Integer id, ConferenceRoomDto conferenceRoomDto) {
+    public ConferenceRoomResponse updateConferenceRoomById(String conferenceRoomName, ConferenceRoomRequest conferenceRoomRequest) {
         return null;
     }
 }

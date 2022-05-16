@@ -1,7 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.organization.service;
 
 import com.sda.transporeon.finalconferenceroom.organization.model.Organization;
-import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationDto;
+import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationResponse;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
 import com.sda.transporeon.finalconferenceroom.organization.repository.OrganizationRepository;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ class OrganizationServiceTest {
 
         Mockito.when(organizationRepository.save(addedOrganization)).thenReturn(organizationFromDb);
         //when
-        OrganizationDto returnedOrganization = organizationService.addOrganization(organizationToAdd);
+        OrganizationResponse returnedOrganization = organizationService.addOrganization(organizationToAdd);
         //then
         assertAll(
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
@@ -69,7 +69,7 @@ class OrganizationServiceTest {
 
         Mockito.when(organizationRepository.findByOrganizationName(organizationName)).thenReturn(Optional.of(organizationFromDb));
         //when
-        OrganizationDto returnedOrganization = organizationService.getOrganizationByName(organizationName);
+        OrganizationResponse returnedOrganization = organizationService.getOrganizationByName(organizationName);
         //then
         assertAll(
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
@@ -112,7 +112,7 @@ class OrganizationServiceTest {
         updatedOrganization.setOrganizationName("updatedOrganization");
 
         //when
-        OrganizationDto returnedOrganization = organizationService.updateOrganization("organization1",updatedOrganization);
+        OrganizationResponse returnedOrganization = organizationService.updateOrganization("organization1",updatedOrganization);
         //then
         assertAll(
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
