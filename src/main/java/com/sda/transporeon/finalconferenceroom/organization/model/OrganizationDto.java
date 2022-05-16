@@ -4,15 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrganizationDto {
-
-    private Integer organizationId;
+    private Long organizationId;
     private String organizationName;
-    private List<String> conferenceRoomDtoList = new ArrayList<>();
+    private String numberOfRooms;
 }
