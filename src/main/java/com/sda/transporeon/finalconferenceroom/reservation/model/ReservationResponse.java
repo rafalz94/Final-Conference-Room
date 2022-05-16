@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class ReservationDto {
+public class ReservationResponse {
 
     private Integer reservationId;
     private String reservationIdentifier;
