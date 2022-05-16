@@ -5,12 +5,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ConferenceRoomDto {
+public class ConferenceRoomResponse {
 
     private Integer conferenceRoomId;
     private String conferenceRoomName;
     private Integer level;
-    private Boolean availability;
+    private Availability availability;
     private Integer sittingPlaces;
     private Integer standingPlaces;
     private String organizationName;

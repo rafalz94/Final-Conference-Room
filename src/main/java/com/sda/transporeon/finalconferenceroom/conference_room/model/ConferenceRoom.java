@@ -21,7 +21,7 @@ public class ConferenceRoom {
     private Integer conferenceRoomId;
     private String conferenceRoomName;
     private Integer level;
-    private Boolean availability;
+    private Availability availability;
     private Integer sittingPlaces;
     private Integer standingPlaces;
     @ManyToOne
