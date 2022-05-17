@@ -1,7 +1,10 @@
 package com.sda.transporeon.finalconferenceroom.reservation.service;
 
+import com.sda.transporeon.finalconferenceroom.conference_room.exception.ConferenceRoomNotFoundException;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoom;
 import com.sda.transporeon.finalconferenceroom.conference_room.repository.ConferenceRoomRepository;
+import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.reservation.model.Reservation;
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationRequest;
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +45,7 @@ public class ReservationService {
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(reservation.getConferenceRoom().getConferenceRoomName());
         });
         reservation.setConferenceRoom(conferenceRoom);
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
@@ -59,7 +61,7 @@ public class ReservationService {
         reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
         checkIfUniqueIdentifierForUpdate(reservationRequest.getReservationIdentifier(), reservationIdentifier);
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(reservationRequest.getConferenceRoomName());
         });
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
@@ -80,7 +82,6 @@ public class ReservationService {
             throw new IllegalArgumentException();
         });
     }
-
 
     public Reservation getIfFound(String reservationIdentifier) {
         return reservationRepository.findByReservationIdentifier(reservationIdentifier).orElseThrow(() -> {
@@ -103,6 +104,4 @@ public class ReservationService {
             throw new IllegalArgumentException();
         });
     }
-
-
 }
