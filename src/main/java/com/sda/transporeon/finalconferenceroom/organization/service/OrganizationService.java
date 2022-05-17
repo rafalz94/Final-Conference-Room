@@ -34,14 +34,14 @@ public class OrganizationService {
 
     public void deleteOrganization(Long organizationId) {
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException();
         });
         organizationRepository.delete(organization);
     }
 
     public OrganizationResponse updateOrganization(OrganizationRequest organizationRequest) {
         Organization organization = organizationRepository.findById(organizationRequest.getOrganizationId()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException();
         });
         organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
             throw new OrganizationAlreadyExistsException(organizationRequest.getOrganizationName());
@@ -53,7 +53,7 @@ public class OrganizationService {
 
     public OrganizationResponse getOrganizationById(Long organizationId) {
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException();
         });
         return organizationMapper.fromEntityToResponse(organization);
     }

@@ -1,7 +1,10 @@
 package com.sda.transporeon.finalconferenceroom.reservation.service;
 
+import com.sda.transporeon.finalconferenceroom.conference_room.exception.ConferenceRoomNotFoundException;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoom;
 import com.sda.transporeon.finalconferenceroom.conference_room.repository.ConferenceRoomRepository;
+import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.reservation.model.Reservation;
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationRequest;
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,8 +44,9 @@ public class ReservationService {
         checkIfUniqueReservation(reservationRequest.getConferenceRoomName(),
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName()).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(reservation.getConferenceRoom().getConferenceRoomName());
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName())
+                .orElseThrow(() -> {
+            throw new ConferenceRoomNotFoundException();
         });
         reservation.setConferenceRoom(conferenceRoom);
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
@@ -59,7 +62,7 @@ public class ReservationService {
         reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
         checkIfUniqueIdentifierForUpdate(reservationRequest.getReservationIdentifier(), reservationIdentifier);
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(reservationRequest.getConferenceRoomName());
+            throw new ConferenceRoomNotFoundException();
         });
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
@@ -71,19 +74,19 @@ public class ReservationService {
 
     public void checkIfUniqueIdentifier(String reservationIdentifier) {
         reservationRepository.findByReservationIdentifier(reservationIdentifier).ifPresent(reservation -> {
-            throw new IllegalArgumentException();
+            throw new ReservationAlreadyExistsException();
         });
     }
 
     public void checkIfUniqueIdentifierForUpdate(String reservationIdentifier1, String reservationIdentifier2) {
         reservationRepository.findByReservationIdentifierAndReservationIdentifierNot(reservationIdentifier1, reservationIdentifier2).ifPresent(reservation -> {
-            throw new IllegalArgumentException();
+            throw new ReservationAlreadyExistsException();
         });
     }
 
     public Reservation getIfFound(Long reservationId) {
         return reservationRepository.findById(reservationId).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ReservationNotFoundException();
         });
     }
 
@@ -91,7 +94,7 @@ public class ReservationService {
         reservationRepository.findByReservationIdentifierNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
                 reservationIdentifier, conferenceRoomName, endDate,
                 startDate).ifPresent(res -> {
-            throw new IllegalArgumentException();
+            throw new ReservationAlreadyExistsException();
         });
     }
 
@@ -99,7 +102,7 @@ public class ReservationService {
         reservationRepository.findByConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
                 conferenceRoomName, endDate,
                 startDate).ifPresent(res -> {
-            throw new IllegalArgumentException();
+            throw new ReservationAlreadyExistsException();
         });
     }
 

@@ -8,9 +8,13 @@ import com.sda.transporeon.finalconferenceroom.reservation.exception.Reservation
 import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 @Slf4j
 @RestControllerAdvice
@@ -56,6 +60,17 @@ public class GlobalExceptionHandler {
     public ErrorBody handleReservationAlreadyExistsException(final ReservationAlreadyExistsException e) {
         log.error("Reservation already exists");
         return new ErrorBody(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ErrorBody handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        List<FieldError> errors = e.getBindingResult().getFieldErrors();
+        final StringBuilder errorMessage = new StringBuilder();
+        for (FieldError fieldError : errors) {
+            errorMessage.append(fieldError.getDefaultMessage()).append(". ");
+        }
+        return new ErrorBody(errorMessage.toString());
     }
 
 }

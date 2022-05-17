@@ -1,17 +1,18 @@
 package com.sda.transporeon.finalconferenceroom.conference_room.service;
 
+import com.sda.transporeon.finalconferenceroom.conference_room.exception.ConferenceRoomAlreadyExistsException;
 import com.sda.transporeon.finalconferenceroom.conference_room.exception.ConferenceRoomNotFoundException;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoom;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomRequest;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomResponse;
 import com.sda.transporeon.finalconferenceroom.conference_room.repository.ConferenceRoomRepository;
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.organization.model.Organization;
 import com.sda.transporeon.finalconferenceroom.organization.repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +40,7 @@ public class ConferenceRoomService {
 
     public ConferenceRoomResponse getConferenceRoomById(Long conferenceRoomId) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(conferenceRoomName);
+            throw new ConferenceRoomNotFoundException();
         });
 
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
@@ -48,10 +49,10 @@ public class ConferenceRoomService {
     public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoom.getConferenceRoomName()).ifPresent(room -> {
-            throw new IllegalArgumentException();
+            throw new ConferenceRoomAlreadyExistsException(conferenceRoom.getConferenceRoomName());
         });
         Organization organization = organizationRepository.findByOrganizationName(conferenceRoomRequest.getOrganizationName()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new OrganizationNotFoundException();
         });
         conferenceRoom.setOrganization(organization);
 
@@ -60,17 +61,17 @@ public class ConferenceRoomService {
 
     public void deleteConferenceRoom(Long conferenceRoomId) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(conferenceRoomName);
+            throw new ConferenceRoomNotFoundException();
         });
         conferenceRoomRepository.delete(conferenceRoom);
     }
 
     public ConferenceRoomResponse updateConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomRequest.getConferenceRoomId()).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(conferenceRoomRequest.getConferenceRoomName());
+            throw new ConferenceRoomNotFoundException();
         });
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
-            throw new IllegalArgumentException();
+            throw new ConferenceRoomAlreadyExistsException(conferenceRoomRequest.getConferenceRoomName());
         });
         conferenceRoom.setConferenceRoomName(conferenceRoomRequest.getConferenceRoomName());
         conferenceRoom.setLevel(conferenceRoomRequest.getLevel());
