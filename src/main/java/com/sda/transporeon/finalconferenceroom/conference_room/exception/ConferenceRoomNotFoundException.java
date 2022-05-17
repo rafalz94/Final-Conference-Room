@@ -5,6 +5,6 @@ import java.util.NoSuchElementException;
 public class ConferenceRoomNotFoundException extends NoSuchElementException {
 
     public ConferenceRoomNotFoundException(String conferenceRoom) {
-        super(String.format("Organization %s not found.", conferenceRoom));
+        super(String.format("Conference room %s not found.", conferenceRoom));
     }
 }
