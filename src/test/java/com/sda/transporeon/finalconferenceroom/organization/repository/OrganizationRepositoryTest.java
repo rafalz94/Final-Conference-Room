@@ -16,7 +16,7 @@ class OrganizationRepositoryTest {
     private OrganizationRepository organizationRepository;
 
     @Test
-    void testIf_FindByOrganizationName_ReturnsOrganizationEntity() {
+    void testIfFindByOrganizationNameReturnsOrganizationEntity() {
         String organizationName = "Company123";
 
         Organization organization = new Organization();

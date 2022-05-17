@@ -1,5 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.organization.service;
 
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.organization.model.Organization;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationResponse;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
@@ -59,9 +61,19 @@ class OrganizationServiceTest {
     }
 
     @Test
+    void ifAddOrganizationIsUsedAndOrganizationAlreadyExistThenExceptionShouldBeThrown() {
+        //given
+        Mockito.when(organizationRepository.findByOrganizationName("organization1")).thenReturn(Optional.of(new Organization()));
+        //when
+        //then
+        assertThrows(OrganizationAlreadyExistsException.class, () -> {
+            organizationService.addOrganization(new OrganizationRequest(1L, "organization1"));
+        });
+    }
+
+    @Test
     void ifGetOrganizationByIdIsUsedThenOrganizationShouldBeReturned() {
         //given
-
         Organization organizationFromDb = new Organization();
         organizationFromDb.setOrganizationId(1L);
         organizationFromDb.setOrganizationName("organization1");
@@ -74,6 +86,17 @@ class OrganizationServiceTest {
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
                 () -> assertEquals(organizationFromDb.getOrganizationName(), returnedOrganization.getOrganizationName())
         );
+    }
+
+    @Test
+    void ifGetOrganizationByIdIsUsedAndOrganizationDoesNotExistThenExceptionShouldBeThrown() {
+        //given
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.empty());
+        //when
+        //then
+        assertThrows(OrganizationNotFoundException.class, () -> {
+            organizationService.getOrganizationById(1L);
+        });
     }
 
     @Test
@@ -91,12 +114,22 @@ class OrganizationServiceTest {
     }
 
     @Test
+    void ifDeleteOrganizationIsUsedAndOrganizationDoesNotExistThenExceptionShouldBeThrown() {
+        //given
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.empty());
+        //when
+        //then
+        assertThrows(OrganizationNotFoundException.class, () -> {
+            organizationService.deleteOrganization(1L);
+        });
+    }
+
+    @Test
     void ifUpdateOrganizationIsUsedThenUpdatedOrganizationShouldBeReturned() {
         //given
         Organization organizationFromDb = new Organization();
         organizationFromDb.setOrganizationId(1L);
         organizationFromDb.setOrganizationName("organization1");
-
 
         Organization updatedOrganizationFromDb = new Organization();
         updatedOrganizationFromDb.setOrganizationId(1L);
@@ -116,6 +149,29 @@ class OrganizationServiceTest {
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
                 () -> assertEquals(organizationFromDb.getOrganizationName(), returnedOrganization.getOrganizationName())
         );
+    }
+
+    @Test
+    void ifUpdateOrganizationIsUsedAndOrganizationDoesNotExistThenExceptionShouldBeThrown() {
+        //given
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.empty());
+        //when
+        //then
+        assertThrows(OrganizationNotFoundException.class, () -> {
+            organizationService.updateOrganization(new OrganizationRequest(1L, "organization1"));
+        });
+    }
+
+    @Test
+    void ifUpdateOrganizationIsUsedAndOrganizationNameIsNotUniqueThenExceptionShouldBeThrown() {
+        //given
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.of(new Organization()));
+        Mockito.when(organizationRepository.findByOrganizationName("organization2")).thenReturn(Optional.of(new Organization()));
+        //when
+        //then
+        assertThrows(OrganizationAlreadyExistsException.class, () -> {
+            organizationService.updateOrganization(new OrganizationRequest(1L, "organization2"));
+        });
     }
 
 
