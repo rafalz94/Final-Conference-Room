@@ -13,5 +13,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     Optional<Reservation> findByReservationIdentifierNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(String identifier, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate);
 
+    Optional<Reservation> findByReservationIdentifierAndReservationIdentifierNot(String reservationIdentifier1, String reservationIdentifier2);
+
     Optional<Reservation> findByReservationIdentifier(String reservationIdentifier);
 }

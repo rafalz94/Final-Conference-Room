@@ -32,16 +32,16 @@ public class OrganizationService {
         return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
 
-    public void deleteOrganization(String organizationName) {
-        Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
-            throw new OrganizationNotFoundException(organizationName);
+    public void deleteOrganization(Long organizationId) {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
+            throw new NoSuchElementException();
         });
         organizationRepository.delete(organization);
     }
 
-    public OrganizationResponse updateOrganization(String organizationName, OrganizationRequest organizationRequest) {
-        Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
-            throw new OrganizationNotFoundException(organizationName);
+    public OrganizationResponse updateOrganization(Long organizationId, OrganizationRequest organizationRequest) {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
+            throw new NoSuchElementException();
         });
         organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
             throw new OrganizationAlreadyExistsException(organizationRequest.getOrganizationName());
@@ -51,9 +51,9 @@ public class OrganizationService {
         return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
 
-    public OrganizationResponse getOrganizationByName(String organizationName) {
-        Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
-            throw new OrganizationNotFoundException(organizationName);
+    public OrganizationResponse getOrganizationById(Long organizationId) {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
+            throw new NoSuchElementException();
         });
         return organizationMapper.fromEntityToResponse(organization);
     }
