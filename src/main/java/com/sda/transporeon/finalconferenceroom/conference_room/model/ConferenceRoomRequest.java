@@ -2,6 +2,7 @@ package com.sda.transporeon.finalconferenceroom.conference_room.model;
 
 import com.sda.transporeon.finalconferenceroom.organization.model.AddOrganizationGroup;
 import com.sda.transporeon.finalconferenceroom.organization.model.UpdateOrganizationGroup;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ConferenceRoomRequest {
     private Long conferenceRoomId;
     @NotBlank(message = "Organization name cannot be blank!", groups = AddOrganizationGroup.class)
