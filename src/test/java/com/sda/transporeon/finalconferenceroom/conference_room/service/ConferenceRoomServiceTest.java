@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,7 +72,7 @@ class ConferenceRoomServiceTest {
         room3.setSittingPlaces(30);
         room3.setStandingPlaces(10);
         room3.setOrganization(organization2);
-        conferenceRooms = new ArrayList<>(List.of(room1, room2, room3));
+        conferenceRooms = new ArrayList<>(List.of(room1, room3));
     }
 
     @Test
@@ -177,8 +178,30 @@ class ConferenceRoomServiceTest {
     @Test
     void ifGetAllByOrganizationNameIsUsedThenListOfAllRoomsShouldBeReturned() {
         //given
+        ConferenceRoom room1 = new ConferenceRoom();
+        room1.setConferenceRoomName("room1");
+        Organization organization1 = new Organization();
+        organization1.setOrganizationName("organization1");
+        room1.setLevel(10);
+        room1.setSittingPlaces(30);
+        room1.setStandingPlaces(10);
+        room1.setOrganization(organization1);
+
+        ConferenceRoom room3 = new ConferenceRoom();
+        room3.setConferenceRoomName("room3");
+        Organization organization2 = new Organization();
+        organization1.setOrganizationName("organization1");
+        room3.setLevel(10);
+        room3.setSittingPlaces(30);
+        room3.setStandingPlaces(10);
+        room3.setOrganization(organization2);
+        List<ConferenceRoom> filteredRooms = conferenceRooms.stream().filter(conferenceRoom -> conferenceRoom.getOrganization().getOrganizationName().equals("organization1")).collect(Collectors.toList());
+
+        Mockito.when(conferenceRoomRepository.findByOrganization_OrganizationName("organization1")).thenReturn(filteredRooms);
         //when
+        List<ConferenceRoomResponse> returnedRooms = conferenceRoomService.getAllByOrganizationName("organization1");
         //then
+        assertEquals(2, returnedRooms.size());
 
     }
 

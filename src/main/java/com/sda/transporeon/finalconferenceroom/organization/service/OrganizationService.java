@@ -31,15 +31,15 @@ public class OrganizationService {
         return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
 
-    public void deleteOrganization(String organizationName) {
-        Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
+    public void deleteOrganization(Long organizationId) {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         organizationRepository.delete(organization);
     }
 
-    public OrganizationResponse updateOrganization(String organizationName, OrganizationRequest organizationRequest) {
-        Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
+    public OrganizationResponse updateOrganization(Long organizationId, OrganizationRequest organizationRequest) {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
@@ -50,8 +50,8 @@ public class OrganizationService {
         return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
 
-    public OrganizationResponse getOrganizationByName(String organizationName) {
-        Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> {
+    public OrganizationResponse getOrganizationById(Long organizationId) {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         return organizationMapper.fromEntityToResponse(organization);
