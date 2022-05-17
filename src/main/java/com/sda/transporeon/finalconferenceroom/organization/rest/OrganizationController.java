@@ -27,9 +27,9 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getAllOrganizations());
     }
 
-    @GetMapping("/{organizationName}")
-    public ResponseEntity<OrganizationResponse> getOrganizationByName(@PathVariable("organizationName") String organizationName) {
-        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOrganizationByName(organizationName));
+    @GetMapping("/{organizationId}")
+    public ResponseEntity<OrganizationResponse> getOrganizationByName(@PathVariable("organizationId") Long organizationId) {
+        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOrganizationById(organizationId));
     }
 
     @PostMapping("/add")
@@ -37,14 +37,14 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.addOrganization(organizationRequest));
     }
 
-    @DeleteMapping("/delete/{organizationName}")
-    public ResponseEntity<Void> deleteOrganization(@PathVariable("organizationName") String organizationName) {
-        organizationService.deleteOrganization(organizationName);
+    @DeleteMapping("/delete/{organizationId}")
+    public ResponseEntity<Void> deleteOrganization(@PathVariable("organizationId") Long organizationId) {
+        organizationService.deleteOrganization(organizationId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update/{organizationName}")
-    public ResponseEntity<OrganizationResponse> updateOrganization(@PathVariable("organizationName") String organizationName, @RequestBody OrganizationRequest organizationRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationName, organizationRequest));
+    @PutMapping("/update/{organizationId}")
+    public ResponseEntity<OrganizationResponse> updateOrganization(@PathVariable("organizationId") Long organizationId, @RequestBody OrganizationRequest organizationRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationId, organizationRequest));
     }
 }

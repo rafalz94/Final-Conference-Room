@@ -38,7 +38,7 @@ class OrganizationServiceTest {
         //given
         final long organizationId = 1;
 
-        OrganizationRequest organizationToAdd=new OrganizationRequest();
+        OrganizationRequest organizationToAdd = new OrganizationRequest();
         organizationToAdd.setOrganizationName("organization1");
 
         Organization addedOrganization = new Organization();
@@ -59,17 +59,16 @@ class OrganizationServiceTest {
     }
 
     @Test
-    void ifGetOrganizationByNameIsUsedThenOrganizationShouldBeReturned() {
+    void ifGetOrganizationByIdIsUsedThenOrganizationShouldBeReturned() {
         //given
-        final String organizationName="organization1";
 
         Organization organizationFromDb = new Organization();
         organizationFromDb.setOrganizationId(1L);
         organizationFromDb.setOrganizationName("organization1");
 
-        Mockito.when(organizationRepository.findByOrganizationName(organizationName)).thenReturn(Optional.of(organizationFromDb));
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.of(organizationFromDb));
         //when
-        OrganizationResponse returnedOrganization = organizationService.getOrganizationByName(organizationName);
+        OrganizationResponse returnedOrganization = organizationService.getOrganizationById(1L);
         //then
         assertAll(
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
@@ -80,13 +79,13 @@ class OrganizationServiceTest {
     @Test
     void ifDeleteOrganizationIsUsedThenOrganizationShouldBeDeleted() {
         //given
-        final String organizationName="organization1";
+        Long organizationId = 1L;
 
         Organization organizationFromDb = new Organization();
 
-        Mockito.when(organizationRepository.findByOrganizationName(organizationName)).thenReturn(Optional.of(organizationFromDb));
+        Mockito.when(organizationRepository.findById(organizationId)).thenReturn(Optional.of(organizationFromDb));
         //when
-        organizationService.deleteOrganization(organizationName);
+        organizationService.deleteOrganization(organizationId);
         //then
         Mockito.verify(organizationRepository).delete(organizationFromDb);
     }
@@ -94,7 +93,7 @@ class OrganizationServiceTest {
     @Test
     void ifUpdateOrganizationIsUsedThenUpdatedOrganizationShouldBeReturned() {
         //given
-        final String organizationName="organization1";
+        final String organizationName = "organization1";
 
         Organization organizationFromDb = new Organization();
         organizationFromDb.setOrganizationId(1L);
@@ -105,14 +104,14 @@ class OrganizationServiceTest {
         updatedOrganizationFromDb.setOrganizationId(1L);
         updatedOrganizationFromDb.setOrganizationName("updatedOrganization");
 
-        Mockito.when(organizationRepository.findByOrganizationName(organizationName)).thenReturn(Optional.of(organizationFromDb));
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.of(organizationFromDb));
         Mockito.when(organizationRepository.save(updatedOrganizationFromDb)).thenReturn(updatedOrganizationFromDb);
 
         OrganizationRequest updatedOrganization = new OrganizationRequest();
         updatedOrganization.setOrganizationName("updatedOrganization");
 
         //when
-        OrganizationResponse returnedOrganization = organizationService.updateOrganization("organization1",updatedOrganization);
+        OrganizationResponse returnedOrganization = organizationService.updateOrganization(1L, updatedOrganization);
         //then
         assertAll(
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),
