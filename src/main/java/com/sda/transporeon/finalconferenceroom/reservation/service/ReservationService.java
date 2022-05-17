@@ -43,7 +43,7 @@ public class ReservationService {
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(reservation.getConferenceRoom().getConferenceRoomName());
         });
         reservation.setConferenceRoom(conferenceRoom);
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
@@ -59,7 +59,7 @@ public class ReservationService {
         reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
         checkIfUniqueIdentifierForUpdate(reservationRequest.getReservationIdentifier(), reservationIdentifier);
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(reservationRequest.getConferenceRoomName());
         });
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());

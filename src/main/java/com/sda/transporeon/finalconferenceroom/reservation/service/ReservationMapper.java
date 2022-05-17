@@ -32,5 +32,4 @@ public class ReservationMapper {
 
         return response;
     }
-
 }

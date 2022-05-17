@@ -1,5 +1,7 @@
 package com.sda.transporeon.finalconferenceroom.organization.service;
 
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.organization.model.Organization;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationResponse;
 import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRequest;
@@ -8,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class OrganizationService {
     public OrganizationResponse addOrganization(OrganizationRequest organizationRequest) {
         Organization organization = organizationMapper.fromRequestToEntity(organizationRequest);
         organizationRepository.findByOrganizationName(organization.getOrganizationName()).ifPresent(org -> {
-            throw new IllegalArgumentException();
+            throw new OrganizationAlreadyExistsException(organization.getOrganizationName());
         });
         return organizationMapper.fromEntityToResponse(organizationRepository.save(organization));
     }
@@ -43,7 +44,7 @@ public class OrganizationService {
             throw new NoSuchElementException();
         });
         organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
-            throw new IllegalArgumentException();
+            throw new OrganizationAlreadyExistsException(organizationRequest.getOrganizationName());
         });
         organization.setOrganizationName(organizationRequest.getOrganizationName());
 

@@ -1,5 +1,6 @@
 package com.sda.transporeon.finalconferenceroom.conference_room.service;
 
+import com.sda.transporeon.finalconferenceroom.conference_room.exception.ConferenceRoomNotFoundException;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoom;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomRequest;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomResponse;
@@ -38,7 +39,7 @@ public class ConferenceRoomService {
 
     public ConferenceRoomResponse getConferenceRoomById(Long conferenceRoomId) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(conferenceRoomName);
         });
 
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
@@ -59,14 +60,14 @@ public class ConferenceRoomService {
 
     public void deleteConferenceRoom(Long conferenceRoomId) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(conferenceRoomName);
         });
         conferenceRoomRepository.delete(conferenceRoom);
     }
 
     public ConferenceRoomResponse updateConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomRequest.getConferenceRoomId()).orElseThrow(() -> {
-            throw new NoSuchElementException();
+            throw new ConferenceRoomNotFoundException(conferenceRoomRequest.getConferenceRoomName());
         });
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
             throw new IllegalArgumentException();
