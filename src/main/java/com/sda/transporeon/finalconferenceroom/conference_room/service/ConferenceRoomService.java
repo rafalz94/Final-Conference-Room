@@ -38,9 +38,9 @@ public class ConferenceRoomService {
                 .map(conferenceRoomMapper::mapFromEntityToResponse).collect(Collectors.toList());
     }
 
-    public ConferenceRoomResponse getConferenceRoomByName(String conferenceRoomName) {
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(conferenceRoomName);
+    public ConferenceRoomResponse getConferenceRoomById(Long conferenceRoomId) {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
+            throw new ConferenceRoomNotFoundException();
         });
 
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
@@ -49,29 +49,29 @@ public class ConferenceRoomService {
     public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoom.getConferenceRoomName()).ifPresent(room -> {
-            throw new ConferenceRoomAlreadyExistsException(conferenceRoomRequest.getConferenceRoomName());
+            throw new ConferenceRoomAlreadyExistsException(conferenceRoom.getConferenceRoomName());
         });
         Organization organization = organizationRepository.findByOrganizationName(conferenceRoomRequest.getOrganizationName()).orElseThrow(() -> {
-            throw new OrganizationNotFoundException(conferenceRoom.getOrganization().getOrganizationName());
+            throw new OrganizationNotFoundException();
         });
         conferenceRoom.setOrganization(organization);
 
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
     }
 
-    public void deleteConferenceRoom(String conferenceRoomName) {
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(conferenceRoomName);
+    public void deleteConferenceRoom(Long conferenceRoomId) {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
+            throw new ConferenceRoomNotFoundException();
         });
         conferenceRoomRepository.delete(conferenceRoom);
     }
 
-    public ConferenceRoomResponse updateConferenceRoom(String conferenceRoomName, ConferenceRoomRequest conferenceRoomRequest) {
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException(conferenceRoomRequest.getConferenceRoomName());
+    public ConferenceRoomResponse updateConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomRequest.getConferenceRoomId()).orElseThrow(() -> {
+            throw new ConferenceRoomNotFoundException();
         });
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
-            throw new ConferenceRoomAlreadyExistsException(conferenceRoomName);
+            throw new ConferenceRoomAlreadyExistsException(conferenceRoomRequest.getConferenceRoomName());
         });
         conferenceRoom.setConferenceRoomName(conferenceRoomRequest.getConferenceRoomName());
         conferenceRoom.setLevel(conferenceRoomRequest.getLevel());

@@ -27,9 +27,9 @@ public class ConferenceRoomController {
         return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getAllConferenceRooms());
     }
 
-    @GetMapping("/{conferenceRoomName}")
-    public ResponseEntity<ConferenceRoomResponse> getConferenceRoomById(@PathVariable("conferenceRoomName") String conferenceRoomName) {
-        return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getConferenceRoomByName(conferenceRoomName));
+    @GetMapping("/{conferenceRoomId}")
+    public ResponseEntity<ConferenceRoomResponse> getConferenceRoomById(@PathVariable("conferenceRoomId") Long conferenceRoomId) {
+        return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getConferenceRoomById(conferenceRoomId));
     }
 
     @GetMapping("/organization/{organizationName}")
@@ -42,14 +42,14 @@ public class ConferenceRoomController {
         return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.addConferenceRoom(conferenceRoomRequest));
     }
 
-    @DeleteMapping("/delete/{conferenceRoomName}")
-    public ResponseEntity<Void> deleteConferenceRoom(@PathVariable("conferenceRoomName") String conferenceRoomName) {
-        conferenceRoomService.deleteConferenceRoom(conferenceRoomName);
+    @DeleteMapping("/delete/{conferenceRoomId}")
+    public ResponseEntity<Void> deleteConferenceRoom(@PathVariable("conferenceRoomId") Long conferenceRoomId) {
+        conferenceRoomService.deleteConferenceRoom(conferenceRoomId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update/{conferenceRoomName}")
-    public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@PathVariable("conferenceRoomName") String conferenceRoomName, @RequestBody ConferenceRoomRequest conferenceRoomRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoom(conferenceRoomName, conferenceRoomRequest));
+    @PutMapping("/update")
+    public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@RequestBody ConferenceRoomRequest conferenceRoomRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoom(conferenceRoomRequest));
     }
 }

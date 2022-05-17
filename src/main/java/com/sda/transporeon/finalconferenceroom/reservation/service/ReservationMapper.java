@@ -23,10 +23,12 @@ public class ReservationMapper {
 
     public ReservationResponse mapFromEntityToResponse(final Reservation reservation) {
         final ReservationResponse response = new ReservationResponse();
+        response.setReservationId(reservation.getReservationId());
         response.setReservationIdentifier(reservation.getReservationIdentifier());
         response.setReservationStartDate(reservation.getReservationStartDate());
         response.setReservationEndDate(reservation.getReservationEndDate());
         response.setConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName());
+        response.setOrganizationName(reservation.getConferenceRoom().getOrganization().getOrganizationName());
 
         return response;
     }

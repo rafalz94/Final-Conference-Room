@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 public class ReservationNotFoundException extends NoSuchElementException {
 
-    public ReservationNotFoundException(String reservation) {
-        super(String.format("Reservation %s not found.", reservation));
+    public ReservationNotFoundException() {
+        super("Reservation not found.");
     }
 }

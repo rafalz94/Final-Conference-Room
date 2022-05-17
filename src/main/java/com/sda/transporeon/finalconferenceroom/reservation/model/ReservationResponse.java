@@ -14,4 +14,5 @@ public class ReservationResponse {
     private LocalDateTime reservationStartDate;
     private LocalDateTime ReservationEndDate;
     private String conferenceRoomName;
+    private String organizationName;
 }
