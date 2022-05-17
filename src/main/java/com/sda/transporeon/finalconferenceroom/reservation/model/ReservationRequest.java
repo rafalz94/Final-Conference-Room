@@ -5,6 +5,7 @@ import com.sda.transporeon.finalconferenceroom.conference_room.model.AddRoomGrou
 import com.sda.transporeon.finalconferenceroom.conference_room.model.UpdateRoomGroup;
 import com.sda.transporeon.finalconferenceroom.organization.model.AddOrganizationGroup;
 import com.sda.transporeon.finalconferenceroom.organization.model.UpdateOrganizationGroup;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReservationRequest {
     private Long reservationId;
     @NotBlank(message = "Reservation identifier cannot be blank!", groups = AddReservationGroup.class)

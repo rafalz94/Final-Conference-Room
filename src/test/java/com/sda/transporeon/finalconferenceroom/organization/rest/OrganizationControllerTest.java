@@ -47,7 +47,9 @@ class OrganizationControllerTest {
 
     @Test
     void testIf_addOrganization_AddRecordToDatabase() throws Exception {
-        OrganizationRequest organizationRequest = OrganizationRequest.of(123L, "Organization123");
+        OrganizationRequest organizationRequest = new OrganizationRequest();
+        organizationRequest.setOrganizationId(123L);
+        organizationRequest.setOrganizationName("Organization123");
 
         mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:" + port + "/organization/add")
                         .contentType(MediaType.APPLICATION_JSON)
