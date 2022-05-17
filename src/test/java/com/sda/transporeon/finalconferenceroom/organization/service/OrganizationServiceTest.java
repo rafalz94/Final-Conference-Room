@@ -93,8 +93,6 @@ class OrganizationServiceTest {
     @Test
     void ifUpdateOrganizationIsUsedThenUpdatedOrganizationShouldBeReturned() {
         //given
-        final String organizationName = "organization1";
-
         Organization organizationFromDb = new Organization();
         organizationFromDb.setOrganizationId(1L);
         organizationFromDb.setOrganizationName("organization1");
@@ -108,10 +106,11 @@ class OrganizationServiceTest {
         Mockito.when(organizationRepository.save(updatedOrganizationFromDb)).thenReturn(updatedOrganizationFromDb);
 
         OrganizationRequest updatedOrganization = new OrganizationRequest();
+        updatedOrganization.setOrganizationId(1L);
         updatedOrganization.setOrganizationName("updatedOrganization");
 
         //when
-        OrganizationResponse returnedOrganization = organizationService.updateOrganization(1L, updatedOrganization);
+        OrganizationResponse returnedOrganization = organizationService.updateOrganization(updatedOrganization);
         //then
         assertAll(
                 () -> assertEquals(organizationFromDb.getOrganizationId(), returnedOrganization.getOrganizationId()),

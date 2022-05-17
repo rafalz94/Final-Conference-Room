@@ -38,8 +38,8 @@ public class OrganizationService {
         organizationRepository.delete(organization);
     }
 
-    public OrganizationResponse updateOrganization(Long organizationId, OrganizationRequest organizationRequest) {
-        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> {
+    public OrganizationResponse updateOrganization(OrganizationRequest organizationRequest) {
+        Organization organization = organizationRepository.findById(organizationRequest.getOrganizationId()).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {

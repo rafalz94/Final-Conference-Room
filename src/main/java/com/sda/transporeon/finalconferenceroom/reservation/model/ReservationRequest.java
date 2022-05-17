@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class ReservationRequest {
-
+    private Long reservationId;
     @NotBlank(message = "Reservation identifier cannot be blank!", groups = AddReservationGroup.class)
     @Size(min = 2, max = 20, message = "Reservation identifier has to be between 2 and 20 characters!", groups = {AddReservationGroup.class, UpdateReservationGroup.class})
     private String reservationIdentifier;

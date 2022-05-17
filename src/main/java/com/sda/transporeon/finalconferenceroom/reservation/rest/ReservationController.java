@@ -27,9 +27,9 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.OK).body(reservationService.getAllReservations());
     }
 
-    @GetMapping("/{reservationIdentifier}")
-    public ResponseEntity<ReservationResponse> getReservationById(@PathVariable("reservationIdentifier") String reservationIdentifier) {
-        return ResponseEntity.status(HttpStatus.OK).body(reservationService.getReservationByIdentifier(reservationIdentifier));
+    @GetMapping("/{reservationId}")
+    public ResponseEntity<ReservationResponse> getReservationById(@PathVariable("reservationId") Long reservationId) {
+        return ResponseEntity.status(HttpStatus.OK).body(reservationService.getReservationById(reservationId));
     }
 
     @PostMapping("/add")
@@ -37,9 +37,9 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationRequest));
     }
 
-    @DeleteMapping("/delete/{reservationIdentifier}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable("reservationIdentifier") String reservationIdentifier) {
-        reservationService.deleteReservationByIdentifier(reservationIdentifier);
+    @DeleteMapping("/delete/{reservationId}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable("reservationId") Long reservationId) {
+        reservationService.deleteReservationByIdentifier(reservationId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

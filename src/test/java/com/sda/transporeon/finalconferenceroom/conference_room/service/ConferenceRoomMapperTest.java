@@ -14,7 +14,7 @@ class ConferenceRoomMapperTest {
     private final ConferenceRoomMapper conferenceRoomMapper = new ConferenceRoomMapper();
 
     @Test
-    void when_fromEntityToResponse_is_used_then_response_object_should_be_returned() {
+    void ifFromEntityToResponseIsUsedThenResponseObjectShouldBeReturned() {
         //given
         ConferenceRoom conferenceRoom = new ConferenceRoom();
         conferenceRoom.setConferenceRoomId(1L);
@@ -42,7 +42,7 @@ class ConferenceRoomMapperTest {
     }
 
     @Test
-    void when_fromRequestToEntity_is_used_then_entity_object_should_be_returned() {
+    void ifFromRequestToEntityIsUsedThenEntityObjectShouldBeReturned() {
         //given
         ConferenceRoomRequest conferenceRoomRequest=new ConferenceRoomRequest();
         conferenceRoomRequest.setConferenceRoomName("room1");

@@ -32,8 +32,8 @@ public class ReservationService {
         return reservationRepository.findAll().stream().map(reservationMapper::mapFromEntityToResponse).collect(Collectors.toList());
     }
 
-    public ReservationResponse getReservationByIdentifier(String reservationIdentifier) {
-        Reservation reservation = getIfFound(reservationIdentifier);
+    public ReservationResponse getReservationById(Long reservationId) {
+        Reservation reservation = getIfFound(reservationId);
         return reservationMapper.mapFromEntityToResponse(reservation);
     }
 
@@ -49,13 +49,13 @@ public class ReservationService {
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
-    public void deleteReservationByIdentifier(String reservationIdentifier) {
-        Reservation reservation = getIfFound(reservationIdentifier);
+    public void deleteReservationByIdentifier(Long reservationId) {
+        Reservation reservation = getIfFound(reservationId);
         reservationRepository.delete(reservation);
     }
 
     public ReservationResponse updateReservation(String reservationIdentifier, ReservationRequest reservationRequest) {
-        Reservation reservation = getIfFound(reservationIdentifier);
+        Reservation reservation = getIfFound(reservationRequest.getReservationId());
         reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
         checkIfUniqueIdentifierForUpdate(reservationRequest.getReservationIdentifier(), reservationIdentifier);
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
@@ -81,9 +81,8 @@ public class ReservationService {
         });
     }
 
-
-    public Reservation getIfFound(String reservationIdentifier) {
-        return reservationRepository.findByReservationIdentifier(reservationIdentifier).orElseThrow(() -> {
+    public Reservation getIfFound(Long reservationId) {
+        return reservationRepository.findById(reservationId).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
     }

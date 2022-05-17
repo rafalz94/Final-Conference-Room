@@ -20,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,7 +71,7 @@ class ConferenceRoomServiceTest {
         room3.setSittingPlaces(30);
         room3.setStandingPlaces(10);
         room3.setOrganization(organization2);
-        conferenceRooms = new ArrayList<>(List.of(room1, room3));
+        conferenceRooms = new ArrayList<>(List.of(room1, room2, room3));
     }
 
     @Test
@@ -129,9 +128,10 @@ class ConferenceRoomServiceTest {
     }
 
     @Test
-    void ifGetConferenceRoomByNameIsUsedThenResponseObjectShouldBeReturned() {
+    void ifGetConferenceRoomByIdIsUsedThenResponseObjectShouldBeReturned() {
         //given
         ConferenceRoom roomFromDb = new ConferenceRoom();
+        roomFromDb.setConferenceRoomId(1L);
         roomFromDb.setConferenceRoomName("room1");
         roomFromDb.setAvailability(Availability.YES);
         Organization organization1 = new Organization();
@@ -141,9 +141,9 @@ class ConferenceRoomServiceTest {
         roomFromDb.setSittingPlaces(30);
         roomFromDb.setStandingPlaces(10);
 
-        Mockito.when(conferenceRoomRepository.findByConferenceRoomName("room1")).thenReturn(Optional.of(roomFromDb));
+        Mockito.when(conferenceRoomRepository.findById(1L)).thenReturn(Optional.of(roomFromDb));
         //when
-        ConferenceRoomResponse returnedRoom = conferenceRoomService.getConferenceRoomByName("room1");
+        ConferenceRoomResponse returnedRoom = conferenceRoomService.getConferenceRoomById(1L);
         //then
         assertAll(
                 () -> assertEquals(roomFromDb.getConferenceRoomId(), returnedRoom.getConferenceRoomId()),
@@ -159,6 +159,7 @@ class ConferenceRoomServiceTest {
     void ifDeleteConferenceRoomIsUsedThenRoomShouldBeDeleted() {
         //given
         ConferenceRoom roomToDelete = new ConferenceRoom();
+        roomToDelete.setConferenceRoomId(1L);
         roomToDelete.setConferenceRoomName("room1");
         roomToDelete.setAvailability(Availability.YES);
         Organization organization1 = new Organization();
@@ -167,9 +168,9 @@ class ConferenceRoomServiceTest {
         roomToDelete.setLevel(10);
         roomToDelete.setSittingPlaces(30);
         roomToDelete.setStandingPlaces(10);
-        Mockito.when(conferenceRoomRepository.findByConferenceRoomName("room1")).thenReturn(Optional.of(roomToDelete));
+        Mockito.when(conferenceRoomRepository.findById(1L)).thenReturn(Optional.of(roomToDelete));
         //when
-        conferenceRoomService.deleteConferenceRoom("room1");
+        conferenceRoomService.deleteConferenceRoom(1L);
         //then
         Mockito.verify(conferenceRoomRepository).delete(roomToDelete);
     }
@@ -195,9 +196,8 @@ class ConferenceRoomServiceTest {
         room3.setSittingPlaces(30);
         room3.setStandingPlaces(10);
         room3.setOrganization(organization2);
-        List<ConferenceRoom> filteredRooms = conferenceRooms.stream().filter(conferenceRoom -> conferenceRoom.getOrganization().getOrganizationName().equals("organization1")).collect(Collectors.toList());
 
-        Mockito.when(conferenceRoomRepository.findByOrganization_OrganizationName("organization1")).thenReturn(filteredRooms);
+        Mockito.when(conferenceRoomRepository.findByOrganization_OrganizationName("organization1")).thenReturn(List.of(room1, room3));
         //when
         List<ConferenceRoomResponse> returnedRooms = conferenceRoomService.getAllByOrganizationName("organization1");
         //then

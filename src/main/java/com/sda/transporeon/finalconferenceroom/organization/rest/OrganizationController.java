@@ -43,8 +43,8 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update/{organizationId}")
-    public ResponseEntity<OrganizationResponse> updateOrganization(@PathVariable("organizationId") Long organizationId, @RequestBody OrganizationRequest organizationRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationId, organizationRequest));
+    @PutMapping("/update")
+    public ResponseEntity<OrganizationResponse> updateOrganization(@RequestBody OrganizationRequest organizationRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationRequest));
     }
 }

@@ -36,8 +36,8 @@ public class ConferenceRoomService {
                 .map(conferenceRoomMapper::mapFromEntityToResponse).collect(Collectors.toList());
     }
 
-    public ConferenceRoomResponse getConferenceRoomByName(String conferenceRoomName) {
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
+    public ConferenceRoomResponse getConferenceRoomById(Long conferenceRoomId) {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
 
@@ -57,15 +57,15 @@ public class ConferenceRoomService {
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
     }
 
-    public void deleteConferenceRoom(String conferenceRoomName) {
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
+    public void deleteConferenceRoom(Long conferenceRoomId) {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         conferenceRoomRepository.delete(conferenceRoom);
     }
 
-    public ConferenceRoomResponse updateConferenceRoom(String conferenceRoomName, ConferenceRoomRequest conferenceRoomRequest) {
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(conferenceRoomName).orElseThrow(() -> {
+    public ConferenceRoomResponse updateConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomRequest.getConferenceRoomId()).orElseThrow(() -> {
             throw new NoSuchElementException();
         });
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
