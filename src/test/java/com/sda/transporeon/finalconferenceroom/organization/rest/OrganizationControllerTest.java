@@ -5,6 +5,7 @@ import com.sda.transporeon.finalconferenceroom.organization.model.OrganizationRe
 import com.sda.transporeon.finalconferenceroom.organization.service.OrganizationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -36,7 +37,7 @@ class OrganizationControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void testIfGetAllOrganizationReturnEmptyDatabase () throws Exception {
+    void testIf_getAllOrganization_returnEmptyDatabase () throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organization"))
                 .andDo(print())
                 .andExpect(content().string("[]"))
@@ -45,8 +46,10 @@ class OrganizationControllerTest {
     }
 
     @Test
-    void testIfAddOrganizationAddRecordToDatabase() throws Exception {
-        OrganizationRequest organizationRequest = OrganizationRequest.of(123L, "Organization123");
+    void testIf_addOrganization_AddRecordToDatabase() throws Exception {
+        OrganizationRequest organizationRequest = new OrganizationRequest();
+        organizationRequest.setOrganizationId(123L);
+        organizationRequest.setOrganizationName("Organization123");
 
         mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:" + port + "/organization/add")
                         .contentType(MediaType.APPLICATION_JSON)
