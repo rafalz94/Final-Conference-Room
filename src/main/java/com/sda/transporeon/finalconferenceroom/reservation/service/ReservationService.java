@@ -46,8 +46,8 @@ public class ReservationService {
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName())
                 .orElseThrow(() -> {
-            throw new ConferenceRoomNotFoundException();
-        });
+                    throw new ConferenceRoomNotFoundException();
+                });
         reservation.setConferenceRoom(conferenceRoom);
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
