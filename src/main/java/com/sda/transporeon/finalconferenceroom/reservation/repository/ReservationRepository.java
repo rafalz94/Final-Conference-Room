@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Optional<Reservation> findByConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate);
 
-    Optional<Reservation> findByReservationIdentifierNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(String identifier, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate);
-
-    Optional<Reservation> findByReservationIdentifierAndReservationIdentifierNot(String reservationIdentifier1, String reservationIdentifier2);
+    Optional<Reservation> findByReservationIdNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(Long reservationId, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate);
 
     Optional<Reservation> findByReservationIdentifier(String reservationIdentifier);
+
+
 }

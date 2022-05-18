@@ -13,4 +13,7 @@ public interface ConferenceRoomRepository extends JpaRepository<ConferenceRoom, 
 
     List<ConferenceRoom> findByOrganization_OrganizationName(String organizationName);
 
+    //    TODO
+    Optional<ConferenceRoom> findByConferenceRoomNameAndAvailabilityEquals(String conferenceRoomName, boolean availability);
+
 }
