@@ -11,6 +11,7 @@ public class ReservationMapper {
 
     public Reservation mapFromRequestToEntity(final ReservationRequest request) {
         final Reservation reservation = new Reservation();
+        reservation.setReservationId(reservation.getReservationId());
         reservation.setReservationIdentifier(request.getReservationIdentifier());
         reservation.setReservationStartDate(request.getReservationStartDate());
         reservation.setReservationEndDate(request.getReservationEndDate());

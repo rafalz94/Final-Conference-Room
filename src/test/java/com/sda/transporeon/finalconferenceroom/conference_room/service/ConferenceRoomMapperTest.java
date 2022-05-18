@@ -1,6 +1,5 @@
 package com.sda.transporeon.finalconferenceroom.conference_room.service;
 
-import com.sda.transporeon.finalconferenceroom.conference_room.model.Availability;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoom;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomRequest;
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoomResponse;
@@ -20,7 +19,7 @@ class ConferenceRoomMapperTest {
         conferenceRoom.setConferenceRoomId(1L);
         conferenceRoom.setConferenceRoomName("room1");
         conferenceRoom.setLevel(10);
-        conferenceRoom.setAvailability(Availability.YES);
+        conferenceRoom.setAvailability(true);
         conferenceRoom.setStandingPlaces(30);
         conferenceRoom.setSittingPlaces(10);
         Organization organization = new Organization();

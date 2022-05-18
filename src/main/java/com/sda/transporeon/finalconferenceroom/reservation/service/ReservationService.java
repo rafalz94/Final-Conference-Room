@@ -44,7 +44,7 @@ public class ReservationService {
         checkIfUniqueReservation(reservationRequest.getConferenceRoomName(),
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName())
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomNameAndAvailabilityEquals(reservation.getConferenceRoom().getConferenceRoomName(), true)
                 .orElseThrow(() -> {
                     throw new ConferenceRoomNotFoundException();
                 });
@@ -52,22 +52,20 @@ public class ReservationService {
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
-    public void deleteReservationByIdentifier(Long reservationId) {
+    public void deleteReservationById(Long reservationId) {
         Reservation reservation = getIfFound(reservationId);
         reservationRepository.delete(reservation);
     }
 
-    public ReservationResponse updateReservation(String reservationIdentifier, ReservationRequest reservationRequest) {
+    public ReservationResponse updateReservation(ReservationRequest reservationRequest) {
         Reservation reservation = getIfFound(reservationRequest.getReservationId());
-        reservation.setReservationIdentifier(reservationRequest.getReservationIdentifier());
-        checkIfUniqueIdentifierForUpdate(reservationRequest.getReservationIdentifier(), reservationIdentifier);
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException();
         });
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
         reservation.setReservationEndDate(reservationRequest.getReservationEndDate());
-        checkIfUniqueReservationForUpdate(reservationIdentifier, reservationRequest.getConferenceRoomName(), reservationRequest.getReservationEndDate(),
+        checkIfUniqueReservationForUpdate(reservation.getReservationId(), reservationRequest.getConferenceRoomName(), reservationRequest.getReservationEndDate(),
                 reservationRequest.getReservationStartDate());
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
@@ -78,21 +76,15 @@ public class ReservationService {
         });
     }
 
-    public void checkIfUniqueIdentifierForUpdate(String reservationIdentifier1, String reservationIdentifier2) {
-        reservationRepository.findByReservationIdentifierAndReservationIdentifierNot(reservationIdentifier1, reservationIdentifier2).ifPresent(reservation -> {
-            throw new ReservationAlreadyExistsException();
-        });
-    }
-
     public Reservation getIfFound(Long reservationId) {
         return reservationRepository.findById(reservationId).orElseThrow(() -> {
             throw new ReservationNotFoundException();
         });
     }
 
-    public void checkIfUniqueReservationForUpdate(String reservationIdentifier, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
-        reservationRepository.findByReservationIdentifierNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
-                reservationIdentifier, conferenceRoomName, endDate,
+    public void checkIfUniqueReservationForUpdate(Long reservationId, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
+        reservationRepository.findByReservationIdNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
+                reservationId, conferenceRoomName, endDate,
                 startDate).ifPresent(res -> {
             throw new ReservationAlreadyExistsException();
         });
