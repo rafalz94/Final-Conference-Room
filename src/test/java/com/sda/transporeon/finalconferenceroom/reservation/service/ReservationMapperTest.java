@@ -36,14 +36,17 @@ class ReservationMapperTest {
         Reservation reservation = new Reservation(1L, "reservation1", LocalDateTime.MIN, LocalDateTime.MAX,
                 new ConferenceRoom(1L, "room1", 10, true, 50, 10,
                         new Organization(1L, "organization1", null), null));
+        String startDate = ReservationMapper.dateParser(reservation.getReservationStartDate());
+        String endDate = ReservationMapper.dateParser(reservation.getReservationEndDate());
         //when
         ReservationResponse reservationResponse = reservationMapper.mapFromEntityToResponse(reservation);
+
         //then
         assertAll(
                 () -> assertEquals(reservation.getReservationIdentifier(), reservationResponse.getReservationIdentifier()),
                 () -> assertEquals(reservation.getConferenceRoom().getConferenceRoomName(), reservationResponse.getConferenceRoomName()),
-                () -> assertEquals(reservation.getReservationStartDate(), reservationResponse.getReservationStartDate()),
-                () -> assertEquals(reservation.getReservationEndDate(), reservationResponse.getReservationEndDate())
+                () -> assertEquals(startDate, reservationResponse.getReservationStartDate()),
+                () -> assertEquals(endDate, reservationResponse.getReservationEndDate())
         );
     }
 }

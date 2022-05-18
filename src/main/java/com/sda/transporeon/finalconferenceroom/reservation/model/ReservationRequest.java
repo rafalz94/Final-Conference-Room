@@ -1,8 +1,5 @@
 package com.sda.transporeon.finalconferenceroom.reservation.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sda.transporeon.finalconferenceroom.conference_room.model.AddRoomGroup;
-import com.sda.transporeon.finalconferenceroom.conference_room.model.UpdateRoomGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,16 +13,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReservationRequest {
     private Long reservationId;
-    @NotBlank(message = "Reservation identifier cannot be blank!", groups = AddReservationGroup.class)
-    @Size(min = 2, max = 20, message = "Reservation identifier has to be between 2 and 20 characters!", groups = {AddReservationGroup.class, UpdateReservationGroup.class})
+    @NotBlank(message = "Reservation identifier cannot be blank!")
+    @Size(min = 2, max = 20, message = "Reservation identifier has to be between 2 and 20 characters!")
     private String reservationIdentifier;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime reservationStartDate;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime reservationEndDate;
 
-    @NotBlank(message = "Conference room name cannot be blank!", groups = AddRoomGroup.class)
-    @Size(min = 2, max = 20, message = "Conference room name has to be between 2 and 20 characters!", groups = {AddRoomGroup.class, UpdateRoomGroup.class})
+    @NotBlank(message = "Conference room name cannot be blank!")
+    @Size(min = 2, max = 20, message = "Conference room name has to be between 2 and 20 characters!")
     private String conferenceRoomName;
 
 }

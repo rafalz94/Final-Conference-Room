@@ -34,8 +34,7 @@ class ConferenceRoomMapperTest {
                 () -> assertEquals(conferenceRoom.getLevel(), conferenceRoomResponse.getLevel()),
                 () -> assertEquals(conferenceRoom.getStandingPlaces(), conferenceRoomResponse.getStandingPlaces()),
                 () -> assertEquals(conferenceRoom.getSittingPlaces(), conferenceRoomResponse.getSittingPlaces()),
-                () -> assertEquals(conferenceRoom.getOrganization().getOrganizationName(), conferenceRoomResponse.getOrganizationName()),
-                () -> assertEquals(conferenceRoom.getAvailability(), conferenceRoomResponse.getAvailability())
+                () -> assertEquals(conferenceRoom.getOrganization().getOrganizationName(), conferenceRoomResponse.getOrganizationName())
         );
 
     }
@@ -49,6 +48,7 @@ class ConferenceRoomMapperTest {
         conferenceRoomRequest.setStandingPlaces(30);
         conferenceRoomRequest.setSittingPlaces(10);
         conferenceRoomRequest.setOrganizationName("organization1");
+        conferenceRoomRequest.setAvailability("YES");
         //when
         ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         //then
