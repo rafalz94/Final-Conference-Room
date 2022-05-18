@@ -37,7 +37,7 @@ public class ReservationMapper {
         return response;
     }
 
-    public String dateParser(LocalDateTime localDateTime) {
+    public static String dateParser(LocalDateTime localDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return localDateTime.format(dateTimeFormatter);
     }
