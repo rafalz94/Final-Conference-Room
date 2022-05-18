@@ -129,7 +129,7 @@ class ConferenceRoomServiceTest {
         //then
         assertThrows(ConferenceRoomAlreadyExistsException.class, () -> {
             conferenceRoomService.addConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,true));
         });
     }
 
@@ -141,7 +141,7 @@ class ConferenceRoomServiceTest {
         //then
         assertThrows(OrganizationNotFoundException.class, () -> {
             conferenceRoomService.addConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,true));
         });
     }
 
@@ -241,7 +241,7 @@ class ConferenceRoomServiceTest {
         Mockito.when(conferenceRoomRepository.save(updatedRoomFromDb)).thenReturn(updatedRoomFromDb);
         //when
         ConferenceRoomResponse returnedRoom = conferenceRoomService.updateConferenceRoom(new ConferenceRoomRequest(1L,
-                "organization1", "updatedName", 10, 40, 10));
+                "organization1", "updatedName", 10, 40, 10,true));
         //then
         assertAll(
                 () -> assertEquals(updatedRoomFromDb.getConferenceRoomName(), returnedRoom.getConferenceRoomName()),
@@ -258,7 +258,7 @@ class ConferenceRoomServiceTest {
         //then
         assertThrows(OrganizationNotFoundException.class, () -> {
             conferenceRoomService.addConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,true));
         });
     }
 
@@ -266,12 +266,12 @@ class ConferenceRoomServiceTest {
     void ifUpdateConferenceRoomIsUsedAndRoomNameIsNotUniqueThenExceptionShouldBeThrown() {
         //given
         Mockito.when(conferenceRoomRepository.findById(1L)).thenReturn(Optional.of(new ConferenceRoom()));
-        Mockito.when(conferenceRoomRepository.findByConferenceRoomName("room1")).thenReturn(Optional.of(new ConferenceRoom()));
+        Mockito.when(conferenceRoomRepository.findByConferenceRoomIdNotAndConferenceRoomName(1L,"room1")).thenReturn(Optional.of(new ConferenceRoom()));
         //when
         //then
         assertThrows(ConferenceRoomAlreadyExistsException.class, () -> {
             conferenceRoomService.updateConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,true));
         });
     }
 

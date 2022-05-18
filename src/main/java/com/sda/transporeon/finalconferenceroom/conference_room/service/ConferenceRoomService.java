@@ -46,7 +46,7 @@ public class ConferenceRoomService {
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
     }
 
-        public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
+    public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoom.getConferenceRoomName()).ifPresent(room -> {
             throw new ConferenceRoomAlreadyExistsException(conferenceRoom.getConferenceRoomName());
@@ -70,10 +70,11 @@ public class ConferenceRoomService {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomRequest.getConferenceRoomId()).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException();
         });
-        //TODO dodanie unikalności
-        conferenceRoomRepository.findByConferenceRoomName(conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
+        conferenceRoomRepository.findByConferenceRoomIdNotAndConferenceRoomName(conferenceRoomRequest.getConferenceRoomId(),
+                conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
             throw new ConferenceRoomAlreadyExistsException(conferenceRoomRequest.getConferenceRoomName());
         });
+        conferenceRoom.setAvailability(ConferenceRoomMapper.stringToBoolean(conferenceRoomRequest.getAvailability()));
         conferenceRoom.setConferenceRoomName(conferenceRoomRequest.getConferenceRoomName());
         conferenceRoom.setLevel(conferenceRoomRequest.getLevel());
         conferenceRoom.setStandingPlaces(conferenceRoomRequest.getStandingPlaces());

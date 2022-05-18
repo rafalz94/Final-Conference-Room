@@ -43,21 +43,21 @@ class ConferenceRoomMapperTest {
     @Test
     void ifFromRequestToEntityIsUsedThenEntityObjectShouldBeReturned() {
         //given
-        ConferenceRoomRequest conferenceRoomRequest=new ConferenceRoomRequest();
+        ConferenceRoomRequest conferenceRoomRequest = new ConferenceRoomRequest();
         conferenceRoomRequest.setConferenceRoomName("room1");
         conferenceRoomRequest.setLevel(10);
         conferenceRoomRequest.setStandingPlaces(30);
         conferenceRoomRequest.setSittingPlaces(10);
         conferenceRoomRequest.setOrganizationName("organization1");
         //when
-        ConferenceRoom conferenceRoom=conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
+        ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         //then
         assertAll(
-                () -> assertEquals(conferenceRoomRequest.getConferenceRoomName(),conferenceRoom.getConferenceRoomName()),
-                () -> assertEquals(conferenceRoomRequest.getSittingPlaces(),conferenceRoom.getSittingPlaces()),
-                () -> assertEquals(conferenceRoomRequest.getStandingPlaces(),conferenceRoom.getStandingPlaces()),
-                () -> assertEquals(conferenceRoomRequest.getLevel(),conferenceRoom.getLevel()),
-                () -> assertEquals(conferenceRoomRequest.getOrganizationName(),conferenceRoom.getOrganization().getOrganizationName())
+                () -> assertEquals(conferenceRoomRequest.getConferenceRoomName(), conferenceRoom.getConferenceRoomName()),
+                () -> assertEquals(conferenceRoomRequest.getSittingPlaces(), conferenceRoom.getSittingPlaces()),
+                () -> assertEquals(conferenceRoomRequest.getStandingPlaces(), conferenceRoom.getStandingPlaces()),
+                () -> assertEquals(conferenceRoomRequest.getLevel(), conferenceRoom.getLevel()),
+                () -> assertEquals(conferenceRoomRequest.getOrganizationName(), conferenceRoom.getOrganization().getOrganizationName())
         );
     }
 

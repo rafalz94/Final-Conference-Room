@@ -10,7 +10,7 @@ public class ConferenceRoomResponse {
     private Long conferenceRoomId;
     private String conferenceRoomName;
     private Integer level;
-    private Boolean availability;
+    private String availability;
     private Integer sittingPlaces;
     private Integer standingPlaces;
     private String organizationName;
