@@ -27,4 +27,5 @@ public class ConferenceRoomRequest {
     private Integer level;
     private Integer sittingPlaces;
     private Integer standingPlaces;
+    private String availability;
 }

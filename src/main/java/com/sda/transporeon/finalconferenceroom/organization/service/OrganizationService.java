@@ -43,7 +43,7 @@ public class OrganizationService {
         Organization organization = organizationRepository.findById(organizationRequest.getOrganizationId()).orElseThrow(() -> {
             throw new OrganizationNotFoundException();
         });
-        organizationRepository.findByOrganizationName(organizationRequest.getOrganizationName()).ifPresent(org -> {
+        organizationRepository.findByOrganizationIdNotAndOrganizationName(organizationRequest.getOrganizationId(), organizationRequest.getOrganizationName()).ifPresent(org -> {
             throw new OrganizationAlreadyExistsException(organizationRequest.getOrganizationName());
         });
         organization.setOrganizationName(organizationRequest.getOrganizationName());

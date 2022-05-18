@@ -15,7 +15,7 @@ public class ConferenceRoomMapper {
         conferenceRoom.setLevel(request.getLevel());
         conferenceRoom.setSittingPlaces(request.getSittingPlaces());
         conferenceRoom.setStandingPlaces(request.getStandingPlaces());
-
+        conferenceRoom.setAvailability(stringToBoolean(request.getAvailability()));
         final Organization organization = new Organization();
         organization.setOrganizationName(request.getOrganizationName());
         conferenceRoom.setOrganization(organization);
@@ -28,12 +28,20 @@ public class ConferenceRoomMapper {
         response.setConferenceRoomId(conferenceRoom.getConferenceRoomId());
         response.setConferenceRoomName(conferenceRoom.getConferenceRoomName());
         response.setLevel(conferenceRoom.getLevel());
-        response.setAvailability(conferenceRoom.getAvailability());
+        response.setAvailability(booleanToString(conferenceRoom.getAvailability()));
         response.setSittingPlaces(conferenceRoom.getSittingPlaces());
         response.setStandingPlaces(conferenceRoom.getStandingPlaces());
         response.setOrganizationName(conferenceRoom.getOrganization().getOrganizationName());
 
         return response;
+    }
+
+    public String booleanToString(Boolean availability) {
+        return availability ? "YES" : "NO";
+    }
+
+    public static Boolean stringToBoolean(String availability) {
+        return availability.equals("YES");
     }
 }
 

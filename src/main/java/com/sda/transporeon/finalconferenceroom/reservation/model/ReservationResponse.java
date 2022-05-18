@@ -9,7 +9,6 @@ public class ReservationResponse {
 
     private Long reservationId;
     private String reservationIdentifier;
-//    TODO
     private String reservationStartDate;
     private String ReservationEndDate;
     private String conferenceRoomName;
