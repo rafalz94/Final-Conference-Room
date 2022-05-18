@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("http://localhost:4200/")
@@ -33,7 +34,7 @@ public class ReservationController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ReservationResponse> addReservation(@RequestBody ReservationRequest reservationRequest) {
+    public ResponseEntity<ReservationResponse> addReservation(@RequestBody @Valid ReservationRequest reservationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationRequest));
     }
 
@@ -43,12 +44,8 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    //    @PutMapping("/update/{reservationIdentifier}")
-//    public ResponseEntity<ReservationResponse> updateReservation(@PathVariable("reservationIdentifier") String reservationIdentifier, @RequestBody ReservationRequest reservationRequest) {
-//        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservation(reservationIdentifier, reservationRequest));
-//    }
     @PutMapping("/update")
-    public ResponseEntity<ReservationResponse> updateReservation(@RequestBody ReservationRequest reservationRequest) {
+    public ResponseEntity<ReservationResponse> updateReservation(@RequestBody @Valid ReservationRequest reservationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservation(reservationRequest));
     }
 }
