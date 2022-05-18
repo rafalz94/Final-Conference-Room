@@ -44,7 +44,7 @@ public class ReservationService {
         checkIfUniqueReservation(reservationRequest.getConferenceRoomName(),
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomNameAndAvailabilityEquals(reservation.getConferenceRoom().getConferenceRoomName(), true)
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName())
                 .orElseThrow(() -> {
                     throw new ConferenceRoomNotFoundException();
                 });

@@ -46,19 +46,7 @@ public class ConferenceRoomService {
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
     }
 
-    //    public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
-//        ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
-//        conferenceRoomRepository.findByConferenceRoomName(conferenceRoom.getConferenceRoomName()).ifPresent(room -> {
-//            throw new ConferenceRoomAlreadyExistsException(conferenceRoom.getConferenceRoomName());
-//        });
-//        Organization organization = organizationRepository.findByOrganizationName(conferenceRoomRequest.getOrganizationName()).orElseThrow(() -> {
-//            throw new OrganizationNotFoundException();
-//        });
-//        conferenceRoom.setOrganization(organization);
-//
-//        return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
-//    }
-    public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
+        public ConferenceRoomResponse addConferenceRoom(ConferenceRoomRequest conferenceRoomRequest) {
         ConferenceRoom conferenceRoom = conferenceRoomMapper.mapFromRequestToEntity(conferenceRoomRequest);
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoom.getConferenceRoomName()).ifPresent(room -> {
             throw new ConferenceRoomAlreadyExistsException(conferenceRoom.getConferenceRoomName());
@@ -67,7 +55,7 @@ public class ConferenceRoomService {
             throw new OrganizationNotFoundException();
         });
         conferenceRoom.setOrganization(organization);
-        conferenceRoom.setAvailability(true);
+
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoomRepository.save(conferenceRoom));
     }
 
@@ -82,6 +70,7 @@ public class ConferenceRoomService {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomRequest.getConferenceRoomId()).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException();
         });
+        //TODO dodanie unikalności
         conferenceRoomRepository.findByConferenceRoomName(conferenceRoomRequest.getConferenceRoomName()).ifPresent(room -> {
             throw new ConferenceRoomAlreadyExistsException(conferenceRoomRequest.getConferenceRoomName());
         });
