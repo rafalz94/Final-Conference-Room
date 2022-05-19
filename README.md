@@ -6,6 +6,8 @@ The main goal of this system is to manage conference rooms reservations for a sp
 
 ## API Reference examples
 
+### - Organization
+
 ### GET all organizations:
 
 ```http
@@ -128,6 +130,149 @@ The main goal of this system is to manage conference rooms reservations for a sp
 }
 ```
 
+---
+
+### - Conference Room
+
+### GET all conference-rooms:
+
+```http
+  GET /api/conference-room
+```
+
+#### Sample output:
+```json
+[
+  {
+    "conferenceRoomId": 1,
+    "conferenceRoomName": "big-room1",
+    "level": 2,
+    "availability": "NO",
+    "sittingPlaces": 12,
+    "standingPlaces": 54,
+    "organizationName": "Transporeon"
+  },
+  {
+    "conferenceRoomId": 2,
+    "conferenceRoomName": "big-room2",
+    "level": 3,
+    "availability": "NO",
+    "sittingPlaces": 12,
+    "standingPlaces": 54,
+    "organizationName": "Transporeon"
+  }
+]
+```
+
+### GET a specific conference-room:
+
+```http
+  GET /api/conference-room/{conferenceRoomId}
+```
+
+| Parameter          | Type     | Description                       |
+|:-------------------|:---------|:----------------------------------|
+| `conferenceRoomId` | `long`   | **Required**. requested room's id |
+
+#### Sample output:
+```json
+{
+  "conferenceRoomId": 1,
+  "conferenceRoomName": "big-room1",
+  "level": 2,
+  "availability": "NO",
+  "sittingPlaces": 12,
+  "standingPlaces": 54,
+  "organizationName": "Transporeon"
+}
+```
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Conference room not found."
+}
+```
+
+### POST
+
+```http
+  POST /api/conference-roon
+```
+
+
+| Parameter | Type   | Description |
+|:----------|:-------|:------------|
+| `TODO`    | `TODO` | TODO        |
+
+#### Sample output:
+```json
+{
+  "conferenceRoomId": 3,
+  "conferenceRoomName": "big-room3",
+  "level": 3,
+  "availability": "NO",
+  "sittingPlaces": 12,
+  "standingPlaces": 54,
+  "organizationName": "Transporeon"
+}
+```
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Conference room big-room3 already exists."
+}
+```
+
+### DELETE
+
+```http
+  DELETE /api/conference-room/{conferenceRoomId}
+```
+
+| Parameter          | Type     | Description                       |
+|:-------------------|:---------|:----------------------------------|
+| `conferenceRoomId` | `long`   | **Required**. requested room's id |
+
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Conference room not found."
+}
+```
+
+### PUT
+
+```http
+  PUT /api/conference-room
+```
+
+
+| Parameter | Type   | Description |
+|:----------|:-------|:------------|
+| `TODO`    | `TODO` | TODO        |
+
+#### Sample output:
+```json
+{
+  "conferenceRoomId": 1,
+  "conferenceRoomName": "big-room1",
+  "level": 7,
+  "availability": "NO",
+  "sittingPlaces": 2,
+  "standingPlaces": 2,
+  "organizationName": "Transporeon"
+}
+```
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Conference room not found."
+}
+```
 
 ## Tech Stack
 
