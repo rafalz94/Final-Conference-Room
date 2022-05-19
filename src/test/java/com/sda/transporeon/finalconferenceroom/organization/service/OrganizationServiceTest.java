@@ -166,7 +166,7 @@ class OrganizationServiceTest {
     void ifUpdateOrganizationIsUsedAndOrganizationNameIsNotUniqueThenExceptionShouldBeThrown() {
         //given
         Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.of(new Organization()));
-        Mockito.when(organizationRepository.findByOrganizationName("organization2")).thenReturn(Optional.of(new Organization()));
+        Mockito.when(organizationRepository.findByOrganizationIdNotAndOrganizationName(1L,"organization2")).thenReturn(Optional.of(new Organization()));
         //when
         //then
         assertThrows(OrganizationAlreadyExistsException.class, () -> {

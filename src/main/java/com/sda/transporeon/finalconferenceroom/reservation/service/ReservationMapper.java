@@ -6,6 +6,9 @@ import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationRequ
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationResponse;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class ReservationMapper {
 
@@ -26,11 +29,16 @@ public class ReservationMapper {
         final ReservationResponse response = new ReservationResponse();
         response.setReservationId(reservation.getReservationId());
         response.setReservationIdentifier(reservation.getReservationIdentifier());
-        response.setReservationStartDate(reservation.getReservationStartDate());
-        response.setReservationEndDate(reservation.getReservationEndDate());
+        response.setReservationStartDate(dateParser(reservation.getReservationStartDate()));
+        response.setReservationEndDate(dateParser(reservation.getReservationEndDate()));
         response.setConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName());
         response.setOrganizationName(reservation.getConferenceRoom().getOrganization().getOrganizationName());
 
         return response;
+    }
+
+    public static String dateParser(LocalDateTime localDateTime) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return localDateTime.format(dateTimeFormatter);
     }
 }

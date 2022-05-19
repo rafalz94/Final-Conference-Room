@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization, Long> {
     Optional<Organization> findByOrganizationName(String name);
+
+    Optional<Organization> findByOrganizationIdNotAndOrganizationName(Long organizationId, String organizationName);
 }

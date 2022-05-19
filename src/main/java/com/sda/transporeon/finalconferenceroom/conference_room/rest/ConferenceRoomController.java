@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("http://localhost:4200/")
@@ -38,7 +39,7 @@ public class ConferenceRoomController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ConferenceRoomResponse> addConferenceRoom(@RequestBody ConferenceRoomRequest conferenceRoomRequest) {
+    public ResponseEntity<ConferenceRoomResponse> addConferenceRoom(@RequestBody @Valid ConferenceRoomRequest conferenceRoomRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.addConferenceRoom(conferenceRoomRequest));
     }
 
@@ -49,7 +50,7 @@ public class ConferenceRoomController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@RequestBody ConferenceRoomRequest conferenceRoomRequest) {
+    public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@RequestBody @Valid ConferenceRoomRequest conferenceRoomRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoom(conferenceRoomRequest));
     }
 }

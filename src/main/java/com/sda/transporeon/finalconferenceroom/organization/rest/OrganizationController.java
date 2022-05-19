@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("http://localhost:4200/")
@@ -33,7 +34,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<OrganizationResponse> addOrganization(@RequestBody OrganizationRequest organizationRequest) {
+    public ResponseEntity<OrganizationResponse> addOrganization(@RequestBody @Valid OrganizationRequest organizationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.addOrganization(organizationRequest));
     }
 
@@ -44,7 +45,7 @@ public class OrganizationController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<OrganizationResponse> updateOrganization(@RequestBody OrganizationRequest organizationRequest) {
+    public ResponseEntity<OrganizationResponse> updateOrganization(@RequestBody @Valid OrganizationRequest organizationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.updateOrganization(organizationRequest));
     }
 }

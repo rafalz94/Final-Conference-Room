@@ -56,6 +56,7 @@ class ConferenceRoomServiceTest {
         room1.setSittingPlaces(30);
         room1.setStandingPlaces(10);
         room1.setOrganization(organization1);
+        room1.setAvailability(true);
 
         ConferenceRoom room2 = new ConferenceRoom();
         room2.setConferenceRoomName("room2");
@@ -63,6 +64,7 @@ class ConferenceRoomServiceTest {
         room2.setSittingPlaces(30);
         room2.setStandingPlaces(10);
         room2.setOrganization(organization1);
+        room2.setAvailability(true);
 
         ConferenceRoom room3 = new ConferenceRoom();
         room3.setConferenceRoomName("room3");
@@ -72,54 +74,57 @@ class ConferenceRoomServiceTest {
         room3.setSittingPlaces(30);
         room3.setStandingPlaces(10);
         room3.setOrganization(organization2);
+        room3.setAvailability(true);
         conferenceRooms = new ArrayList<>(List.of(room1, room2, room3));
     }
-//TODO
 
-//    @Test
-//    void ifAddConferenceRoomIsUsedThenAddedRoomShouldBeReturned() {
-//        //given
-//        ConferenceRoomRequest roomToAdd = new ConferenceRoomRequest();
-//        roomToAdd.setConferenceRoomName("room1");
-//        roomToAdd.setLevel(10);
-//        roomToAdd.setSittingPlaces(30);
-//        roomToAdd.setStandingPlaces(10);
-//        roomToAdd.setOrganizationName("organization1");
-//
-//        ConferenceRoom addedRoom = new ConferenceRoom();
-//        addedRoom.setConferenceRoomName("room1");
-//        Organization organization1 = new Organization();
-//        organization1.setOrganizationName("organization1");
-//        addedRoom.setOrganization(organization1);
-//        addedRoom.setLevel(10);
-//        addedRoom.setSittingPlaces(30);
-//        addedRoom.setStandingPlaces(10);
-//
-//        ConferenceRoom roomFromDb = new ConferenceRoom(1L, "room1", 10,
-//                true, 50, 15,
-//                new Organization(1L, "organization1", null), null);
-//        roomFromDb.setConferenceRoomId(1L);
-//        roomFromDb.setConferenceRoomName("room1");
-//        Organization organization2 = new Organization();
-//        organization2.setOrganizationName("organization1");
-//        roomFromDb.setOrganization(organization2);
-//        roomFromDb.setLevel(10);
-//        roomFromDb.setSittingPlaces(30);
-//        roomFromDb.setStandingPlaces(10);
-//        roomFromDb.setConferenceRoomId(1L);
-//
-//        Mockito.when(conferenceRoomRepository.save(addedRoom)).thenReturn(roomFromDb);
-//        Mockito.when(organizationRepository.findByOrganizationName("organization1")).thenReturn(Optional.of(organization2));
-//        //when
-//        ConferenceRoomResponse returnedRoom = conferenceRoomService.addConferenceRoom(roomToAdd);
-//        //then
-//        assertAll(
-//                () -> assertEquals(roomToAdd.getConferenceRoomName(), returnedRoom.getConferenceRoomName()),
-//                () -> assertEquals(roomToAdd.getLevel(), returnedRoom.getLevel()),
-//                () -> assertEquals(roomToAdd.getStandingPlaces(), returnedRoom.getStandingPlaces()),
-//                () -> assertEquals(roomToAdd.getSittingPlaces(), returnedRoom.getSittingPlaces())
-//        );
-//    }
+    @Test
+    void ifAddConferenceRoomIsUsedThenAddedRoomShouldBeReturned() {
+        //given
+        ConferenceRoomRequest roomToAdd = new ConferenceRoomRequest();
+        roomToAdd.setConferenceRoomName("room1");
+        roomToAdd.setLevel(10);
+        roomToAdd.setSittingPlaces(30);
+        roomToAdd.setStandingPlaces(10);
+        roomToAdd.setOrganizationName("organization1");
+        roomToAdd.setAvailability("YES");
+
+        ConferenceRoom addedRoom = new ConferenceRoom();
+        addedRoom.setConferenceRoomName("room1");
+        Organization organization1 = new Organization();
+        organization1.setOrganizationName("organization1");
+        addedRoom.setOrganization(organization1);
+        addedRoom.setLevel(10);
+        addedRoom.setSittingPlaces(30);
+        addedRoom.setStandingPlaces(10);
+        addedRoom.setAvailability(true);
+
+        ConferenceRoom roomFromDb = new ConferenceRoom(1L, "room1", 10,
+                true, 50, 15,
+                new Organization(1L, "organization1", null), null);
+        roomFromDb.setConferenceRoomId(1L);
+        roomFromDb.setConferenceRoomName("room1");
+        Organization organization2 = new Organization();
+        organization2.setOrganizationName("organization1");
+        roomFromDb.setOrganization(organization2);
+        roomFromDb.setLevel(10);
+        roomFromDb.setSittingPlaces(30);
+        roomFromDb.setStandingPlaces(10);
+        roomFromDb.setConferenceRoomId(1L);
+        roomFromDb.setAvailability(true);
+
+        Mockito.when(conferenceRoomRepository.save(addedRoom)).thenReturn(roomFromDb);
+        Mockito.when(organizationRepository.findByOrganizationName("organization1")).thenReturn(Optional.of(organization2));
+        //when
+        ConferenceRoomResponse returnedRoom = conferenceRoomService.addConferenceRoom(roomToAdd);
+        //then
+        assertAll(
+                () -> assertEquals(roomToAdd.getConferenceRoomName(), returnedRoom.getConferenceRoomName()),
+                () -> assertEquals(roomToAdd.getLevel(), returnedRoom.getLevel()),
+                () -> assertEquals(roomToAdd.getStandingPlaces(), returnedRoom.getStandingPlaces()),
+                () -> assertEquals(roomToAdd.getSittingPlaces(), returnedRoom.getSittingPlaces())
+        );
+    }
 
     @Test
     void ifAddConferenceRoomIsUsedAndRoomAlreadyExistThenExceptionShouldBeThrown() {
@@ -129,7 +134,7 @@ class ConferenceRoomServiceTest {
         //then
         assertThrows(ConferenceRoomAlreadyExistsException.class, () -> {
             conferenceRoomService.addConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,"YES"));
         });
     }
 
@@ -141,7 +146,7 @@ class ConferenceRoomServiceTest {
         //then
         assertThrows(OrganizationNotFoundException.class, () -> {
             conferenceRoomService.addConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,"YES"));
         });
     }
 
@@ -170,7 +175,7 @@ class ConferenceRoomServiceTest {
                 () -> assertEquals(roomFromDb.getConferenceRoomId(), returnedRoom.getConferenceRoomId()),
                 () -> assertEquals(roomFromDb.getConferenceRoomName(), returnedRoom.getConferenceRoomName()),
                 () -> assertEquals(roomFromDb.getLevel(), returnedRoom.getLevel()),
-                () -> assertEquals(roomFromDb.getAvailability(), returnedRoom.getAvailability()),
+                () -> assertEquals("YES", returnedRoom.getAvailability()),
                 () -> assertEquals(roomFromDb.getStandingPlaces(), returnedRoom.getStandingPlaces()),
                 () -> assertEquals(roomFromDb.getSittingPlaces(), returnedRoom.getSittingPlaces())
         );
@@ -241,7 +246,7 @@ class ConferenceRoomServiceTest {
         Mockito.when(conferenceRoomRepository.save(updatedRoomFromDb)).thenReturn(updatedRoomFromDb);
         //when
         ConferenceRoomResponse returnedRoom = conferenceRoomService.updateConferenceRoom(new ConferenceRoomRequest(1L,
-                "organization1", "updatedName", 10, 40, 10));
+                "organization1", "updatedName", 10, 40, 10,"YES"));
         //then
         assertAll(
                 () -> assertEquals(updatedRoomFromDb.getConferenceRoomName(), returnedRoom.getConferenceRoomName()),
@@ -258,7 +263,7 @@ class ConferenceRoomServiceTest {
         //then
         assertThrows(OrganizationNotFoundException.class, () -> {
             conferenceRoomService.addConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,"YES"));
         });
     }
 
@@ -266,12 +271,12 @@ class ConferenceRoomServiceTest {
     void ifUpdateConferenceRoomIsUsedAndRoomNameIsNotUniqueThenExceptionShouldBeThrown() {
         //given
         Mockito.when(conferenceRoomRepository.findById(1L)).thenReturn(Optional.of(new ConferenceRoom()));
-        Mockito.when(conferenceRoomRepository.findByConferenceRoomName("room1")).thenReturn(Optional.of(new ConferenceRoom()));
+        Mockito.when(conferenceRoomRepository.findByConferenceRoomIdNotAndConferenceRoomName(1L,"room1")).thenReturn(Optional.of(new ConferenceRoom()));
         //when
         //then
         assertThrows(ConferenceRoomAlreadyExistsException.class, () -> {
             conferenceRoomService.updateConferenceRoom(new ConferenceRoomRequest(1L,
-                    "organization1", "room1", 10, 50, 10));
+                    "organization1", "room1", 10, 50, 10,"YES"));
         });
     }
 

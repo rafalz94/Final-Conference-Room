@@ -46,14 +46,16 @@ class ReservationServiceTest {
                 new ConferenceRoom(1L, "room1", 10, true, 50, 10,
                         new Organization(1L, "organization1", null), null));
         Mockito.when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservationFromDb));
+        String startDate=ReservationMapper.dateParser(reservationFromDb.getReservationStartDate());
+        String endDate=ReservationMapper.dateParser(reservationFromDb.getReservationEndDate());
         //when
         ReservationResponse returnedReservation = reservationService.getReservationById(1L);
         //then
         assertAll(
                 () -> assertEquals(reservationFromDb.getReservationId(), returnedReservation.getReservationId()),
                 () -> assertEquals(reservationFromDb.getReservationIdentifier(), returnedReservation.getReservationIdentifier()),
-                () -> assertEquals(reservationFromDb.getReservationStartDate(), returnedReservation.getReservationStartDate()),
-                () -> assertEquals(reservationFromDb.getReservationEndDate(), returnedReservation.getReservationEndDate()),
+                () -> assertEquals(startDate, returnedReservation.getReservationStartDate()),
+                () -> assertEquals(endDate, returnedReservation.getReservationEndDate()),
                 () -> assertEquals(reservationFromDb.getConferenceRoom().getConferenceRoomName(), returnedReservation.getConferenceRoomName())
         );
     }
