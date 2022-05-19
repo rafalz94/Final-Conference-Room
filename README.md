@@ -274,6 +274,40 @@ The main goal of this system is to manage conference rooms reservations for a sp
 }
 ```
 
+---
+
+### - Reservation
+
+### GET all reservations:
+
+```http
+  GET /api/reservation
+```
+
+#### Sample output:
+```json
+[
+  {
+    "conferenceRoomId": 1,
+    "conferenceRoomName": "big-room1",
+    "level": 2,
+    "availability": "NO",
+    "sittingPlaces": 12,
+    "standingPlaces": 54,
+    "organizationName": "Transporeon"
+  },
+  {
+    "conferenceRoomId": 2,
+    "conferenceRoomName": "big-room2",
+    "level": 3,
+    "availability": "NO",
+    "sittingPlaces": 12,
+    "standingPlaces": 54,
+    "organizationName": "Transporeon"
+  }
+]
+```
+
 ## Tech Stack
 
 **Technologies:** Java, Spring Framework, H2, PostgreSQL
