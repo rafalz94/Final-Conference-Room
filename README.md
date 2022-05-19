@@ -197,7 +197,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### POST
 
 ```http
-  POST /api/conference-roon
+  POST /api/conference-room
 ```
 
 
@@ -288,25 +288,131 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ```json
 [
   {
-    "conferenceRoomId": 1,
+    "reservationId": 1,
+    "reservationIdentifier": "res1",
+    "reservationStartDate": "2021-02-23 12:12",
     "conferenceRoomName": "big-room1",
-    "level": 2,
-    "availability": "NO",
-    "sittingPlaces": 12,
-    "standingPlaces": 54,
-    "organizationName": "Transporeon"
+    "organizationName": "Transporeon",
+    "reservationEndDate": "2021-02-23 13:32"
   },
   {
-    "conferenceRoomId": 2,
-    "conferenceRoomName": "big-room2",
-    "level": 3,
-    "availability": "NO",
-    "sittingPlaces": 12,
-    "standingPlaces": 54,
-    "organizationName": "Transporeon"
+    "reservationId": 2,
+    "reservationIdentifier": "res2",
+    "reservationStartDate": "2021-02-23 12:12",
+    "conferenceRoomName": "small-room1",
+    "organizationName": "Transporeon",
+    "reservationEndDate": "2021-02-23 13:32"
   }
 ]
 ```
+
+### GET a specific reservation:
+
+```http
+  GET /api/reservation/{reservationId}
+```
+
+| Parameter       | Type     | Description                              |
+|:----------------|:---------|:-----------------------------------------|
+| `reservationId` | `long`   | **Required**. requested reservations' id |
+
+#### Sample output:
+```json
+{
+  "reservationId": 1,
+  "reservationIdentifier": "res1",
+  "reservationStartDate": "2021-02-23 12:12",
+  "conferenceRoomName": "big-room1",
+  "organizationName": "Transporeon",
+  "reservationEndDate": "2021-02-23 13:32"
+}
+```
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Reservation not found."
+}
+```
+
+### POST
+
+```http
+  POST /api/reservation
+```
+
+
+| Parameter | Type   | Description |
+|:----------|:-------|:------------|
+| `TODO`    | `TODO` | TODO        |
+
+#### Sample output:
+```json
+{
+  "reservationId": 2,
+  "reservationIdentifier": "res2",
+  "reservationStartDate": "2021-02-23 12:12",
+  "conferenceRoomName": "small-room1",
+  "organizationName": "Transporeon",
+  "reservationEndDate": "2021-02-23 13:32"
+}
+```
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Reservation already exists."
+}
+```
+
+### DELETE
+
+```http
+  DELETE /api/reservation/{reservationId}
+```
+
+| Parameter       | Type   | Description                              |
+|:----------------|:-------|:-----------------------------------------|
+| `reservationId` | `long` | **Required**. requested reservations' id |
+
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Reservation not found."
+}
+```
+
+### PUT
+
+```http
+  PUT /api/reservation
+```
+
+
+| Parameter | Type   | Description |
+|:----------|:-------|:------------|
+| `TODO`    | `TODO` | TODO        |
+
+#### Sample output:
+```json
+{
+  "reservationId": 2,
+  "reservationIdentifier": "res2",
+  "reservationStartDate": "2021-02-23 12:12",
+  "conferenceRoomName": "small-room1",
+  "organizationName": "Transporeon",
+  "reservationEndDate": "2021-02-23 14:32"
+}
+```
+
+#### Sample output (invalid parameters):
+```json
+{
+  "message": "Reservation not found."
+}
+```
+
 
 ## Tech Stack
 
