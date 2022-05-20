@@ -31,7 +31,7 @@ public class ConferenceRoomControllerTest {
         Mockito.when(conferenceRoomService.getAllConferenceRooms())
                 .thenReturn(List.of());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/conference-room"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/conference-rooms"))
                 .andDo(print())
                 .andExpect(content().string(containsString("[]")))
                 .andExpect(status().is(200));

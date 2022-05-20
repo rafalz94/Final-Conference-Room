@@ -31,7 +31,7 @@ class OrganizationControllerTest {
 
     @Test
     void ifGetAllOrganizationIsUsedAndDatabaseIsEmptyShouldReturnEmptyDatabaseAndRespondWithOk() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organization"))
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organizations"))
                 .andDo(print())
                 .andExpect(content().string("[]"))
                 .andExpect(status().isOk())
@@ -44,13 +44,13 @@ class OrganizationControllerTest {
         organizationRequest.setOrganizationId(1L);
         organizationRequest.setOrganizationName("Organization123");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:" + port + "/organization/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:" + port + "/organizations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(organizationRequest)))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organization"))
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organizations"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
@@ -63,22 +63,22 @@ class OrganizationControllerTest {
 
         long idToRemove = 1;
 
-        mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:" + port + "/organization/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:" + port + "/organizations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(organizationRequest)))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organization"))
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organizations"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:" + port + "/organization/delete/"+ idToRemove))
+        mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:" + port + "/organizations/"+ idToRemove))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(status().isNoContent());
 
 
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organization"))
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:" + port + "/organizations"))
                 .andDo(print())
                 .andExpect(content().string("[]"))
                 .andExpect(status().isOk())
