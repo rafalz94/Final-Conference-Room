@@ -51,6 +51,7 @@ public class ReservationService {
                     throw new ConferenceRoomNotFoundException();
                 });
         reservation.setConferenceRoom(conferenceRoom);
+
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
@@ -70,6 +71,7 @@ public class ReservationService {
         reservation.setReservationEndDate(reservationRequest.getReservationEndDate());
         checkIfUniqueReservationForUpdate(reservation.getReservationId(), reservationRequest.getConferenceRoomName(), reservationRequest.getReservationEndDate(),
                 reservationRequest.getReservationStartDate());
+
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
@@ -106,6 +108,4 @@ public class ReservationService {
             throw new ReservationDateNotValidException();
         }
     }
-
-
 }

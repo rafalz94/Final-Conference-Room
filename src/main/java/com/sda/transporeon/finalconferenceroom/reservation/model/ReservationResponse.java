@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ReservationResponse {
-
     private Long reservationId;
     private String reservationIdentifier;
     private String reservationStartDate;

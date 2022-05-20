@@ -42,7 +42,6 @@ public class ConferenceRoomService {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findById(conferenceRoomId).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException();
         });
-
         return conferenceRoomMapper.mapFromEntityToResponse(conferenceRoom);
     }
 

@@ -9,12 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface ConferenceRoomRepository extends JpaRepository<ConferenceRoom, Long> {
-    Optional<ConferenceRoom> findByConferenceRoomName(String name);
+    Optional<ConferenceRoom> findByConferenceRoomName(String conferenceRoomName);
 
     List<ConferenceRoom> findByOrganization_OrganizationName(String organizationName);
 
-    Optional<ConferenceRoom> findByConferenceRoomIdNotAndConferenceRoomName(Long conferenceRoomId, String conferenceRoomname);
+    Optional<ConferenceRoom> findByConferenceRoomIdNotAndConferenceRoomName(Long conferenceRoomId, String conferenceRoomName);
 
     Optional<ConferenceRoom> findByConferenceRoomNameAndAvailabilityEquals(String conferenceRoomName, boolean availability);
-
 }

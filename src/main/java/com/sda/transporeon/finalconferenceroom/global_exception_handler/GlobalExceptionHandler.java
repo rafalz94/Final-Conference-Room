@@ -80,5 +80,4 @@ public class GlobalExceptionHandler {
         }
         return new ErrorBody(errorMessage.toString());
     }
-
 }

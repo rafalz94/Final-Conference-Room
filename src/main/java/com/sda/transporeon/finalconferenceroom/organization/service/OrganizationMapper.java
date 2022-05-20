@@ -11,6 +11,7 @@ public class OrganizationMapper {
     public Organization fromRequestToEntity(OrganizationRequest organizationRequest) {
         Organization organization = new Organization();
         organization.setOrganizationName(organizationRequest.getOrganizationName());
+
         return organization;
     }
 
@@ -20,7 +21,7 @@ public class OrganizationMapper {
         organizationResponse.setOrganizationName(organization.getOrganizationName());
         String numberOfRooms = String.valueOf(organization.getConferenceRooms().size());
         organizationResponse.setNumberOfRooms(numberOfRooms);
+
         return organizationResponse;
     }
-
 }

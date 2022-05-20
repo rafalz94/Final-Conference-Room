@@ -44,4 +44,3 @@ public class ConferenceRoomMapper {
         return availability.equals("YES");
     }
 }
-

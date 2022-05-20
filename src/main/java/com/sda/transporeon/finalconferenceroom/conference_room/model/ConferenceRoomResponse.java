@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ConferenceRoomResponse {
-
     private Long conferenceRoomId;
     private String conferenceRoomName;
     private Integer level;
