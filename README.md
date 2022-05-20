@@ -8,14 +8,14 @@ The main goal of this system is to manage conference rooms reservations for a sp
 
 
 
-## API Reference examples
+# API Reference examples
 
-### - Organization
+## --- Organization ---
 
 ### GET all organizations:
 
 ```http
-  GET /api/organization
+  GET /organizations
 ```
 
 #### Sample output:
@@ -38,7 +38,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### GET a specific organization:
 
 ```http
-  GET /api/organization/{organizationId}
+  GET /organizations/{organizationId}
 ```
 
 | Parameter        | Type     | Description                               |
@@ -65,7 +65,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### POST
 
 ```http
-  POST /api/organization
+  POST /organizations
 ```
 
 
@@ -92,7 +92,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### DELETE
 
 ```http
-  DELETE /api/organization/{organizationId}
+  DELETE /organizations/{organizationId}
 ```
 
 | Parameter        | Type     | Description                               |
@@ -110,7 +110,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### PUT
 
 ```http
-  PUT /api/organization
+  PUT /organizations
 ```
 
 

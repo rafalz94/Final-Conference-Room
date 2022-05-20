@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:4200/")
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -33,19 +33,19 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.OK).body(reservationService.getReservationById(reservationId));
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<ReservationResponse> addReservation(@RequestBody @Valid ReservationRequest reservationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationRequest));
     }
 
-    @DeleteMapping("/delete/{reservationId}")
+    @DeleteMapping("/{reservationId}")
     public ResponseEntity<Void> deleteReservation(@PathVariable("reservationId") Long reservationId) {
         reservationService.deleteReservationById(reservationId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     public ResponseEntity<ReservationResponse> updateReservation(@RequestBody @Valid ReservationRequest reservationRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservation(reservationRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(reservationService.updateReservation(reservationRequest));
     }
 }

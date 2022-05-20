@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:4200/")
 @RestController
-@RequestMapping("/conference-room")
+@RequestMapping("/conference-rooms")
 public class ConferenceRoomController {
 
     private final ConferenceRoomService conferenceRoomService;
@@ -38,19 +38,19 @@ public class ConferenceRoomController {
         return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.getAllByOrganizationName(organizationName));
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<ConferenceRoomResponse> addConferenceRoom(@RequestBody @Valid ConferenceRoomRequest conferenceRoomRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.addConferenceRoom(conferenceRoomRequest));
     }
 
-    @DeleteMapping("/delete/{conferenceRoomId}")
+    @DeleteMapping("/{conferenceRoomId}")
     public ResponseEntity<Void> deleteConferenceRoom(@PathVariable("conferenceRoomId") Long conferenceRoomId) {
         conferenceRoomService.deleteConferenceRoom(conferenceRoomId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     public ResponseEntity<ConferenceRoomResponse> updateConferenceRoom(@RequestBody @Valid ConferenceRoomRequest conferenceRoomRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(conferenceRoomService.updateConferenceRoom(conferenceRoomRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(conferenceRoomService.updateConferenceRoom(conferenceRoomRequest));
     }
 }
