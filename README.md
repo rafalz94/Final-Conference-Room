@@ -136,12 +136,12 @@ The main goal of this system is to manage conference rooms reservations for a sp
 
 ---
 
-### - Conference Room
+## --- Conference Room ---
 
-### GET all conference-rooms:
+### GET all conference rooms:
 
 ```http
-  GET /api/conference-room
+  GET /conference-rooms
 ```
 
 #### Sample output:
@@ -168,10 +168,10 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ]
 ```
 
-### GET a specific conference-room:
+### GET a specific conference room:
 
 ```http
-  GET /api/conference-room/{conferenceRoomId}
+  GET /conference-rooms/{conferenceRoomId}
 ```
 
 | Parameter          | Type     | Description                       |
@@ -201,7 +201,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### POST
 
 ```http
-  POST /api/conference-room
+  POST /conference-rooms
 ```
 
 
@@ -232,7 +232,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### DELETE
 
 ```http
-  DELETE /api/conference-room/{conferenceRoomId}
+  DELETE /conference-rooms/{conferenceRoomId}
 ```
 
 | Parameter          | Type     | Description                       |
@@ -250,7 +250,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### PUT
 
 ```http
-  PUT /api/conference-room
+  PUT /conference-rooms
 ```
 
 
@@ -280,12 +280,12 @@ The main goal of this system is to manage conference rooms reservations for a sp
 
 ---
 
-### - Reservation
+## --- Reservation ---
 
 ### GET all reservations:
 
 ```http
-  GET /api/reservation
+  GET /reservations
 ```
 
 #### Sample output:
@@ -313,7 +313,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### GET a specific reservation:
 
 ```http
-  GET /api/reservation/{reservationId}
+  GET /reservations/{reservationId}
 ```
 
 | Parameter       | Type     | Description                              |
@@ -342,7 +342,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### POST
 
 ```http
-  POST /api/reservation
+  POST /reservations
 ```
 
 
@@ -372,7 +372,7 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### DELETE
 
 ```http
-  DELETE /api/reservation/{reservationId}
+  DELETE /reservations/{reservationId}
 ```
 
 | Parameter       | Type   | Description                              |
@@ -390,9 +390,8 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ### PUT
 
 ```http
-  PUT /api/reservation
+  PUT /reservations
 ```
-
 
 | Parameter | Type   | Description |
 |:----------|:-------|:------------|
@@ -416,14 +415,9 @@ The main goal of this system is to manage conference rooms reservations for a sp
   "message": "Reservation not found."
 }
 ```
-
-
 ## Tech Stack
 
 **Technologies:** Java, Spring Framework, H2, PostgreSQL
-
-
-
 
 ## Authors
 
@@ -431,4 +425,3 @@ The main goal of this system is to manage conference rooms reservations for a sp
 - [@Kamil Musiał](https://github.com/kmusial1988)
 - [@Rafał Zieliński](https://github.com/rafalz94)
 - [@Wojciech Wasilewski](https://github.com/wwasilewski)
-
