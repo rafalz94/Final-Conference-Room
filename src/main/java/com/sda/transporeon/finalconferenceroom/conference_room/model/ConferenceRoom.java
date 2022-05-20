@@ -5,12 +5,10 @@ import com.sda.transporeon.finalconferenceroom.reservation.model.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Data
@@ -29,5 +27,4 @@ public class ConferenceRoom {
     private Organization organization;
     @OneToMany(mappedBy = "conferenceRoom", cascade = CascadeType.REMOVE)
     private List<Reservation> reservations = new ArrayList<>();
-
 }
