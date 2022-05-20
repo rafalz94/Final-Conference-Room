@@ -2,11 +2,10 @@
 # Conference Room Reservation System - REST API
 
 The main goal of this system is to manage conference rooms reservations for a specific organization.
+This repository contains back-end code, front-end code is available in the link below:
 
 
-## [Frontend Angular App](https://github.com/kmusial1988/webAppFinal)
-
-
+## [Front-end Angular App](https://github.com/kmusial1988/webAppFinal)
 
 # API Reference examples
 
@@ -34,7 +33,6 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ]
 ```
 
-
 ### GET a specific organization:
 
 ```http
@@ -61,13 +59,11 @@ The main goal of this system is to manage conference rooms reservations for a sp
 }
 ```
 
-
 ### POST
 
 ```http
   POST /organizations
 ```
-
 
 | Parameter | Type   | Description |
 |:----------|:-------|:------------|
@@ -112,7 +108,6 @@ The main goal of this system is to manage conference rooms reservations for a sp
 ```http
   PUT /organizations
 ```
-
 
 | Parameter | Type   | Description |
 |:----------|:-------|:------------|
