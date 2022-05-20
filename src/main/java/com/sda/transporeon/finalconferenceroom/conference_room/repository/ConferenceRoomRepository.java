@@ -15,7 +15,6 @@ public interface ConferenceRoomRepository extends JpaRepository<ConferenceRoom, 
 
     Optional<ConferenceRoom> findByConferenceRoomIdNotAndConferenceRoomName(Long conferenceRoomId, String conferenceRoomname);
 
-    //    TODO
     Optional<ConferenceRoom> findByConferenceRoomNameAndAvailabilityEquals(String conferenceRoomName, boolean availability);
 
 }

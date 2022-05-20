@@ -4,6 +4,7 @@ import com.sda.transporeon.finalconferenceroom.conference_room.exception.Confere
 import com.sda.transporeon.finalconferenceroom.conference_room.model.ConferenceRoom;
 import com.sda.transporeon.finalconferenceroom.conference_room.repository.ConferenceRoomRepository;
 import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationDateNotValidException;
 import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.reservation.model.Reservation;
 import com.sda.transporeon.finalconferenceroom.reservation.model.ReservationRequest;
@@ -44,6 +45,7 @@ public class ReservationService {
         checkIfUniqueReservation(reservationRequest.getConferenceRoomName(),
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
+        checkIfDateIsValid(reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate());
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomNameAndAvailabilityEquals(reservation.getConferenceRoom().getConferenceRoomName(), true)
                 .orElseThrow(() -> {
                     throw new ConferenceRoomNotFoundException();
@@ -62,6 +64,7 @@ public class ReservationService {
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException();
         });
+        checkIfDateIsValid(reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate());
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
         reservation.setReservationEndDate(reservationRequest.getReservationEndDate());
@@ -96,6 +99,12 @@ public class ReservationService {
                 startDate).ifPresent(res -> {
             throw new ReservationAlreadyExistsException();
         });
+    }
+
+    public void checkIfDateIsValid(LocalDateTime startDate,LocalDateTime endDate){
+        if (startDate.isAfter(endDate)||startDate.isBefore(LocalDateTime.now())){
+            throw new ReservationDateNotValidException();
+        }
     }
 
 

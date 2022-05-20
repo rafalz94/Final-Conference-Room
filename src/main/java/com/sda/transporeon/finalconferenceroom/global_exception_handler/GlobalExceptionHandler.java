@@ -5,6 +5,7 @@ import com.sda.transporeon.finalconferenceroom.conference_room.exception.Confere
 import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationAlreadyExistsException;
 import com.sda.transporeon.finalconferenceroom.organization.exception.OrganizationNotFoundException;
 import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationAlreadyExistsException;
+import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationDateNotValidException;
 import com.sda.transporeon.finalconferenceroom.reservation.exception.ReservationNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ReservationAlreadyExistsException.class)
     public ErrorBody handleReservationAlreadyExistsException(final ReservationAlreadyExistsException e) {
         log.error("Reservation already exists");
+        return new ErrorBody(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ReservationDateNotValidException.class)
+    public ErrorBody handleReservationDateNotValidException(final ReservationDateNotValidException e) {
+        log.error("Reservation date incorrect.");
         return new ErrorBody(e.getMessage());
     }
 
