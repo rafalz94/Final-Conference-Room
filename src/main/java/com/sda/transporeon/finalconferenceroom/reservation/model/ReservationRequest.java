@@ -22,5 +22,4 @@ public class ReservationRequest {
     @NotBlank(message = "Conference room name cannot be blank!")
     @Size(min = 2, max = 20, message = "Conference room name has to be between 2 and 20 characters!")
     private String conferenceRoomName;
-
 }
