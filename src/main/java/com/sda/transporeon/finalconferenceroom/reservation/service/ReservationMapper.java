@@ -33,7 +33,6 @@ public class ReservationMapper {
         response.setReservationEndDate(dateParser(reservation.getReservationEndDate()));
         response.setConferenceRoomName(reservation.getConferenceRoom().getConferenceRoomName());
         response.setOrganizationName(reservation.getConferenceRoom().getOrganization().getOrganizationName());
-
         return response;
     }
 

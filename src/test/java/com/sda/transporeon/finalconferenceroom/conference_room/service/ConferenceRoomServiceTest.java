@@ -100,7 +100,7 @@ class ConferenceRoomServiceTest {
         addedRoom.setAvailability(true);
 
         ConferenceRoom roomFromDb = new ConferenceRoom(1L, "room1", 10,
-                true, 50, 15,
+                true, 30, 10,
                 new Organization(1L, "organization1", null), null);
         roomFromDb.setConferenceRoomId(1L);
         roomFromDb.setConferenceRoomName("room1");
