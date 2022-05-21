@@ -45,7 +45,7 @@ public class ReservationService {
         checkIfUniqueReservation(reservationRequest.getConferenceRoomName(),
                 reservationRequest.getReservationEndDate(), reservationRequest.getReservationStartDate());
         checkIfUniqueIdentifier(reservationRequest.getReservationIdentifier());
-        checkIfDateIsValid(reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate());
+        checkIfDateIsValid(reservationRequest.getReservationStartDate(), reservationRequest.getReservationEndDate());
         ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomNameAndAvailabilityEquals(reservation.getConferenceRoom().getConferenceRoomName(), true)
                 .orElseThrow(() -> {
                     throw new ConferenceRoomNotFoundException();
@@ -62,10 +62,10 @@ public class ReservationService {
 
     public ReservationResponse updateReservation(ReservationRequest reservationRequest) {
         Reservation reservation = getIfFound(reservationRequest.getReservationId());
-        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomName(reservationRequest.getConferenceRoomName()).orElseThrow(() -> {
+        ConferenceRoom conferenceRoom = conferenceRoomRepository.findByConferenceRoomNameAndAvailabilityEquals(reservationRequest.getConferenceRoomName(), true).orElseThrow(() -> {
             throw new ConferenceRoomNotFoundException();
         });
-        checkIfDateIsValid(reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate());
+        checkIfDateIsValid(reservationRequest.getReservationStartDate(), reservationRequest.getReservationEndDate());
         reservation.setConferenceRoom(conferenceRoom);
         reservation.setReservationStartDate(reservationRequest.getReservationStartDate());
         reservation.setReservationEndDate(reservationRequest.getReservationEndDate());
@@ -75,19 +75,19 @@ public class ReservationService {
         return reservationMapper.mapFromEntityToResponse(reservationRepository.save(reservation));
     }
 
-    public void checkIfUniqueIdentifier(String reservationIdentifier) {
+    private void checkIfUniqueIdentifier(String reservationIdentifier) {
         reservationRepository.findByReservationIdentifier(reservationIdentifier).ifPresent(reservation -> {
             throw new ReservationAlreadyExistsException();
         });
     }
 
-    public Reservation getIfFound(Long reservationId) {
+    private Reservation getIfFound(Long reservationId) {
         return reservationRepository.findById(reservationId).orElseThrow(() -> {
             throw new ReservationNotFoundException();
         });
     }
 
-    public void checkIfUniqueReservationForUpdate(Long reservationId, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
+    private void checkIfUniqueReservationForUpdate(Long reservationId, String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
         reservationRepository.findByReservationIdNotAndConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
                 reservationId, conferenceRoomName, endDate,
                 startDate).ifPresent(res -> {
@@ -95,7 +95,7 @@ public class ReservationService {
         });
     }
 
-    public void checkIfUniqueReservation(String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
+    private void checkIfUniqueReservation(String conferenceRoomName, LocalDateTime endDate, LocalDateTime startDate) {
         reservationRepository.findByConferenceRoom_ConferenceRoomNameAndReservationStartDateLessThanEqualAndReservationEndDateGreaterThanEqual(
                 conferenceRoomName, endDate,
                 startDate).ifPresent(res -> {
@@ -103,8 +103,8 @@ public class ReservationService {
         });
     }
 
-    public void checkIfDateIsValid(LocalDateTime startDate,LocalDateTime endDate){
-        if (startDate.isAfter(endDate)||startDate.isBefore(LocalDateTime.now())){
+    private void checkIfDateIsValid(LocalDateTime startDate, LocalDateTime endDate) {
+        if (startDate.isAfter(endDate) || startDate.isBefore(LocalDateTime.now())) {
             throw new ReservationDateNotValidException();
         }
     }
